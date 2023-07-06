@@ -3,6 +3,12 @@ import {useGlobalState} from "../global/GlobalStateContext";
 import {useEffect, useState} from "react";
 import {ICustomersSuppliers} from "../interfaces/ICustomersSuppliers";
 import PocketBase from "pocketbase";
+import CustomPaper from "../components/CutomPaper";
+import CustomButton from "../components/CustomButton";
+import {MdAdd} from "react-icons/md";
+import CmpAddEditResourceType from "../components/resourcesType/CmpAddEditResourceType";
+import CmpTableResourcesType from "../components/resourcesType/CmpTableResourcesType";
+import CmpTableCustomersSuppliers from "../components/customersSuppliers/CmpTableCustomersSuppliers";
 
 interface IPageCustomersSuppliers {
     data: ICustomersSuppliers[];
@@ -23,7 +29,6 @@ const PageCustomersSuppliers = () => {
 
     useEffect(() => {
         fetchCustomersSuppliers();
-        console.log(customersSuppliersData)
     }, []);
 
     useEffect(() => {
@@ -40,13 +45,22 @@ const PageCustomersSuppliers = () => {
         const pb = new PocketBase('http://127.0.0.1:8090');
         pb.collection('customers_suppliers')
             .getFullList({
-                fields: 'id, type, function, name, city, address, cap, phone_number, email, piva, iban',
+                expand: 'type, function'
+                // fields: 'id, type, function, name, city, address, cap, phone_number, email, piva, iban',
             })
             .then((response) => {
                 const updatedData: ICustomersSuppliers[] = response.map((record) => ({
                     id: record.id,
-                    type: record.type,
-                    function: record.function,
+                    type: {
+                        id: record.expand.type.id,
+                        name: record.expand.type.name,
+                        description: record.expand.type.description,
+                        note: record.expand.type.note
+                    },
+                    function: {
+                        id: record.expand.type.id,
+                        name: record.expand.type.name
+                    },
                     name: record.name,
                     city: record.city,
                     address: record.address,
@@ -60,6 +74,7 @@ const PageCustomersSuppliers = () => {
                     ...prevData,
                     data: updatedData,
                 }));
+                console.log(customersSuppliersData)
             })
             .catch((error) => {
                 console.error('Errore durante la richiesta GET:', error);
@@ -67,8 +82,12 @@ const PageCustomersSuppliers = () => {
     };
 
     return (
-        <div>
+        <div className={`w-full mx-40 grid gap-4`}>
+            <CustomPaper ec="m-3 flex justify-end gap-2">
+                <CustomButton type="button" text="Nuovo Cliente / Fornitore" icon={<MdAdd/>} onClick={fetchCustomersSuppliers}></CustomButton>
+            </CustomPaper>
 
+            <CmpTableCustomersSuppliers data={customersSuppliersData.data} onUpdate={fetchCustomersSuppliers}/>
         </div>
     );
 };
