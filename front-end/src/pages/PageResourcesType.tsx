@@ -3,15 +3,12 @@ import CustomPaper from "../components/CutomPaper";
 import CustomButton from "../components/CustomButton";
 import {MdAdd} from "react-icons/md";
 import {useState, useEffect} from "react";
-import CmpAddResourceType from "../components/resourcesType/CmpAddResourceType";
+import CmpAddEditResourceType from "../components/resourcesType/CmpAddEditResourceType";
 import PocketBase from 'pocketbase';
 import CmpTableResourcesType from "../components/resourcesType/CmpTableResourcesType";
 import {useNavigate} from "react-router-dom";
 import {IResourcesType} from "../interfaces/IResourcesType"
-
-const pb = new PocketBase('http://127.0.0.1:8090');
-
-interface IResourcesData {
+interface IPageResourcesType {
     data: IResourcesType[];
     call: boolean;
 }
@@ -25,7 +22,7 @@ const PageResourcesType = () => {
         }
     })
 
-    const [resourcesData, setResourcesData] = useState<IResourcesData>({ data: [], call: false });
+    const [resourcesData, setResourcesData] = useState<IPageResourcesType>({ data: [], call: false });
 
     useEffect(() => {
         fetchResources();
@@ -41,6 +38,7 @@ const PageResourcesType = () => {
         }
     }, [resourcesData.call]);
     const fetchResources = () => {
+        const pb = new PocketBase('http://127.0.0.1:8090');
         pb.collection('resources_type')
             .getFullList({
                 fields: 'id, name, description, note',
@@ -73,9 +71,9 @@ const PageResourcesType = () => {
                 <CustomButton type="button" text="Nuova Risorsa" icon={<MdAdd/>} onClick={handleShowAddResourceType}></CustomButton>
             </CustomPaper>
 
-            <CmpAddResourceType show={showAddResourceType} handleClose={handleShowAddResourceType} onUpdate={fetchResources}></CmpAddResourceType>
+            <CmpAddEditResourceType show={showAddResourceType} type="add" handleClose={handleShowAddResourceType} onUpdate={fetchResources}></CmpAddEditResourceType>
 
-            <CmpTableResourcesType data={resourcesData.data}/>
+            <CmpTableResourcesType data={resourcesData.data} onUpdate={fetchResources}/>
         </div>
     )
 }

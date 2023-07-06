@@ -9,17 +9,63 @@ import CustomButton from "../CustomButton";
 import {MdDelete, MdModeEdit} from "react-icons/md"
 import CmpDeleteResourceType from "./CmpDeleteResourceType";
 import {useState} from "react";
+import getIndex from "../../utility/getIndex";
+import CmpAddEditResourceType from "./CmpAddEditResourceType";
 
 interface ICmpTableResourcesType {
     data: IResourcesType[];
+    onUpdate: () => void;
 }
 
 const CmpTableResourcesType: React.FC<ICmpTableResourcesType> = (props) => {
-    const {data} = props
+    const {data, onUpdate} = props
 
-    const [showDeleteResourceType, setShowDeleteResourceType] = useState(false);
-    const handleShowDeleteResourceType = () => {
-        setShowDeleteResourceType(!showDeleteResourceType);
+    const [showActionResourceType, setShowActionResourceType] = useState<{ resourceTypeData: IResourcesType; show: {update: boolean; delete: boolean}}>({
+        resourceTypeData: {
+            id: '',
+            name: '',
+            description: '',
+            note: ''
+        },
+        show: {
+            update: false,
+            delete: false
+        }
+    });
+    const handleShowDeleteResourceType = (id: string | undefined, type: "update" | "delete") => {
+        const indexPump = getIndex(data, "id", id)
+        if (type === "update") {
+            setShowActionResourceType({
+                resourceTypeData: data[indexPump],
+                show: {
+                    update: true,
+                    delete: false
+                }
+            });
+        } else if (type === "delete") {
+            setShowActionResourceType({
+                resourceTypeData: data[indexPump],
+                show: {
+                    update: false,
+                    delete: true
+                }
+            });
+        }
+    };
+
+    const handleCancelActionResourceType = () => {
+        setShowActionResourceType({
+            resourceTypeData: {
+                id: '',
+                name: '',
+                description: '',
+                note: ''
+            },
+            show: {
+                update: false,
+                delete: false
+            }
+        });
     };
 
     return (
@@ -54,8 +100,8 @@ const CmpTableResourcesType: React.FC<ICmpTableResourcesType> = (props) => {
                                 <TableCell>{row.description}</TableCell>
                                 <TableCell>{row.note}</TableCell>
                                 <TableCell action>
-                                    <CustomButton color="gray" type="button" icon={<MdModeEdit/>}/>
-                                    <CustomButton color="gray" type="button" onClick={handleShowDeleteResourceType} icon={<MdDelete/>}/>
+                                    <CustomButton color="gray" type="button" onClick={() => {handleShowDeleteResourceType(row.id, "update")}} icon={<MdModeEdit/>}/>
+                                    <CustomButton color="gray" type="button" onClick={() => {handleShowDeleteResourceType(row.id, "delete")}} icon={<MdDelete/>}/>
                                 </TableCell>
                             </TableRow>
                         ))
@@ -63,7 +109,20 @@ const CmpTableResourcesType: React.FC<ICmpTableResourcesType> = (props) => {
             </TableBody>
         </CustomTable>
 
-        <CmpDeleteResourceType show={showDeleteResourceType}/>
+        <CmpAddEditResourceType
+          show={showActionResourceType.show.update}
+          data={showActionResourceType.resourceTypeData}
+          type="update"
+          handleClose={handleCancelActionResourceType}
+          onUpdate={onUpdate}
+        />
+
+        <CmpDeleteResourceType
+          show={showActionResourceType.show.delete}
+          data={showActionResourceType.resourceTypeData}
+          handleCancel={handleCancelActionResourceType}
+          onUpdate={onUpdate}
+        />
       </>
     );
 };

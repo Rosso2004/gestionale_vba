@@ -1,12 +1,18 @@
 import {useGlobalState} from "../global/GlobalStateContext";
 import CustomPaper from "../components/CutomPaper";
+import {useNavigate} from "react-router-dom";
+import {useEffect} from "react";
 
 const PageDashboard = () => {
+    const navigate = useNavigate();
     const { isVerified } = useGlobalState();
 
-    if (!isVerified) {
-        return <p>401: Non sei autorizzato!</p>;
-    }
+    useEffect(() => {
+        if (!isVerified) {
+            return navigate("/")
+        }
+    })
+
     return (
         <CustomPaper>
             ciao

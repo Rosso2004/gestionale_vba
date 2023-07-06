@@ -2,55 +2,87 @@ import CustomInput from "../CustomInput";
 import CustomButton from "../CustomButton";
 import CustomModal from "../CustomModal";
 import PocketBase from 'pocketbase';
-import {useState} from "react";
-import {MdAdd, MdCancel, MdTextFields} from "react-icons/md";
+import {useEffect, useState} from "react";
+import {MdAdd, MdCancel, MdModeEdit, MdTextFields} from "react-icons/md";
 import {IResourcesType} from "../../interfaces/IResourcesType";
 
 interface ICmpAddResourceType {
     show: boolean;
     handleClose: () => void;
+    data?: IResourcesType;
+    type: "add" | "update";
     onUpdate: () => void;
 }
-const CmpAddResourceType : React.FC<ICmpAddResourceType> = (props) => {
-    const {show, handleClose, onUpdate} = props;
+const CmpAddEditResourceType : React.FC<ICmpAddResourceType> = (props) => {
+    const {show, handleClose, type, data, onUpdate} = props;
     const [formData, setFormData] = useState<IResourcesType>({
+        id:'',
         name: '',
         description: '',
         note: ''
     })
 
+    useEffect(() => {
+        if (type === "update") {
+            setFormData({
+                id: data?.id || '',
+                name: data?.name || '',
+                description: data?.description || '',
+                note: data?.note || ''
+            });
+        }
+    }, [type, data]);
+
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         const pb = new PocketBase('http://127.0.0.1:8090');
-        try {
-            const data = {
-                name: formData.name,
-                description: formData.description,
-                note: formData.note,
-            };
+        const dataToSubmit = {
+            name: formData.name,
+            description: formData.description,
+            note: formData.note,
+        };
+        if (type === "add") {
+            try {
+                const record = await pb.collection('resources_type').create(dataToSubmit);
 
-            const record = await pb.collection('resources_type').create(data);
-
-            if (record) {
-                handleClearAndClose();
-                onUpdate();
+                if (record) {
+                    handleClearAndClose();
+                    onUpdate();
+                }
+            } catch (error) {
+                const errorObj: Error = error as Error;
+                console.log("error: ", errorObj)
             }
-        } catch (error) {
-            const errorObj: Error = error as Error;
-            console.log("error: ", errorObj)
+        } else if (type === "update") {
+            if (data?.id) {
+                try {
+                    const record = await pb.collection('resources_type').update(data.id, dataToSubmit);
+
+                    if (record) {
+                        handleClearAndClose();
+                        onUpdate();
+                    }
+                } catch (error) {
+                    const errorObj: Error = error as Error;
+                    console.log("error: ", errorObj)
+                }
+            } else {
+                console.log("ID non definito");
+            }
         }
     }
 
     const handleClearAndClose = () => {
         handleClose();
         setFormData({
+            id:'',
             name: '',
             description: '',
             note: ''
         })
     }
     return (
-        <CustomModal title="Inserimento nuova risorsa" show={show} handleClose={handleClearAndClose}>
+        <CustomModal title={type === "add" ? "Inserimento Tipo Risorsa" : "Modifica Tipo Risorsa"} show={show} handleClose={handleClearAndClose}>
             <form className="" onSubmit={handleSubmit}>
                 <CustomInput
                     ec="mt-2"
@@ -94,12 +126,11 @@ const CmpAddResourceType : React.FC<ICmpAddResourceType> = (props) => {
                     }}
                 />
 
-
                 <div className="mt-5 flex justify-end gap-2">
                     <CustomButton
                         type="submit"
-                        text="Aggiungi"
-                        icon={<MdAdd/>}
+                        text={type === "add" ? "Aggiungi" : "Modifica"}
+                        icon={type === "add" ? <MdAdd/> : <MdModeEdit/>}
                         color="green"
                     />
                     <CustomButton
@@ -114,5 +145,4 @@ const CmpAddResourceType : React.FC<ICmpAddResourceType> = (props) => {
         </CustomModal>
     );
 };
-
-export default CmpAddResourceType;
+export default CmpAddEditResourceType;

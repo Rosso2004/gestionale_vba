@@ -29,7 +29,7 @@ const CmpSidebar = () => {
                             <span className="ml-3">Dashboard</span>
                         </div>
                     </li>
-                    <li onClick={() => handleClickNav("GestioneCommesse", "/gestioneCommesse")}>
+                    <li onClick={() => handleClickNav("GestioneCommesse", "/orders_management")}>
                         <div
                            className="flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100">
                             <span className="text-gray-500"><MdTopic/></span>
@@ -46,7 +46,7 @@ const CmpSidebar = () => {
                             ${
                                 !dropMenu ? 'hidden' : ''
                             }`}>
-                            <li onClick={() => handleClickNav("Tipo Risorse", "/tipoRisorse")}>
+                            <li onClick={() => handleClickNav("Tipo Risorse", "/resources_type")}>
                                 <div
                                    className="flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100 ml-3">
                                     <span className="text-gray-500"><MdEngineering/></span>
@@ -60,7 +60,7 @@ const CmpSidebar = () => {
                                     <span className="ml-3">Tipo Attività</span>
                                 </div>
                             </li>
-                            <li onClick={() => handleClickNav("Clienti / Fornitori", "/clientiFornitori")}>
+                            <li onClick={() => handleClickNav("Clienti / Fornitori", "/customers_suppliers")}>
                                 <div
                                    className="flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100 ml-3">
                                     <span className="text-gray-500"><MdPeople/></span>

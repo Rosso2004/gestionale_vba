@@ -1,5 +1,5 @@
 export interface IResourcesType {
-    id?: string;
+    id: string;
     name: string;
     description: string;
     note: string;

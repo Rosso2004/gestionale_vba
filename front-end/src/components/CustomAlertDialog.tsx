@@ -7,10 +7,10 @@ type ICustomAlertDialog = {
   cancelBtn?: string;
   show: boolean;
   handleConfirm?: () => void;
-  handleClose?: () => void;
+  handleCancel?: () => void;
 }
 const CustomAlertDialog: React.FC<ICustomAlertDialog> = (props) => {
-  const {text, confirmBtn, cancelBtn, show, handleClose, handleConfirm} = props;
+  const {text, confirmBtn, cancelBtn, show, handleCancel, handleConfirm} = props;
   return (
     <div className={`z-50 flex bg-[#333333bb] flex-col items-center justify-center h-screen fixed md:inset-0
         ${
@@ -26,7 +26,7 @@ const CustomAlertDialog: React.FC<ICustomAlertDialog> = (props) => {
             </h3>
             <div className="space-x-2">
               <CustomButton type="button" text={confirmBtn} onClick={handleConfirm} color="red"/>
-              <CustomButton type="button" text={cancelBtn} onClick={handleClose} color="gray"/>
+              <CustomButton type="button" text={cancelBtn} onClick={handleCancel} color="gray"/>
             </div>
           </div>
         </div>
