@@ -8,10 +8,7 @@ import PocketBase from 'pocketbase';
 import CmpTableResourcesType from "../components/resourcesType/CmpTableResourcesType";
 import {useNavigate} from "react-router-dom";
 import {IResourcesType} from "../interfaces/IResourcesType"
-interface IPageResourcesType {
-    data: IResourcesType[];
-    call: boolean;
-}
+
 const PageResourcesType = () => {
     const navigate = useNavigate();
     const { isVerified } = useGlobalState();
@@ -22,21 +19,12 @@ const PageResourcesType = () => {
         }
     })
 
-    const [resourcesData, setResourcesData] = useState<IPageResourcesType>({ data: [], call: false });
+    const [resourcesTypeData, setResourcesTypeData] = useState<IResourcesType[]>([]);
 
     useEffect(() => {
         fetchResources();
     }, []);
 
-    useEffect(() => {
-        if (resourcesData.call) {
-            fetchResources();
-            setResourcesData((prevData) => ({
-                ...prevData,
-                call: false,
-            }));
-        }
-    }, [resourcesData.call]);
     const fetchResources = () => {
         const pb = new PocketBase('http://127.0.0.1:8090');
         pb.collection('resources_type')
@@ -50,10 +38,7 @@ const PageResourcesType = () => {
                     description: record.description,
                     note: record.note,
                 }));
-                setResourcesData((prevData) => ({
-                    ...prevData,
-                    data: updatedData,
-                }));
+                setResourcesTypeData(updatedData);
             })
             .catch((error) => {
                 console.error('Errore durante la richiesta GET:', error);
@@ -73,7 +58,7 @@ const PageResourcesType = () => {
 
             <CmpAddEditResourceType show={showAddResourceType} type="add" handleClose={handleShowAddResourceType} onUpdate={fetchResources}></CmpAddEditResourceType>
 
-            <CmpTableResourcesType data={resourcesData.data} onUpdate={fetchResources}/>
+            <CmpTableResourcesType data={resourcesTypeData} onUpdate={fetchResources}/>
         </div>
     )
 }

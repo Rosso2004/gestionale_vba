@@ -9,11 +9,7 @@ import {MdAdd} from "react-icons/md";
 import CmpAddEditResourceType from "../components/resourcesType/CmpAddEditResourceType";
 import CmpTableResourcesType from "../components/resourcesType/CmpTableResourcesType";
 import CmpTableCustomersSuppliers from "../components/customersSuppliers/CmpTableCustomersSuppliers";
-
-interface IPageCustomersSuppliers {
-    data: ICustomersSuppliers[];
-    call: boolean;
-}
+import CmpAddEditInfoCustomersSuppliers from "../components/customersSuppliers/CmpAddEditInfoCustomersSuppliers";
 
 const PageCustomersSuppliers = () => {
     const navigate = useNavigate();
@@ -25,28 +21,17 @@ const PageCustomersSuppliers = () => {
         }
     })
 
-    const [customersSuppliersData, setCustomersSuppliersData] = useState<IPageCustomersSuppliers>({ data: [], call: false });
+    const [customersSuppliersData, setCustomersSuppliersData] = useState<ICustomersSuppliers[]>([]);
 
     useEffect(() => {
         fetchCustomersSuppliers();
     }, []);
-
-    useEffect(() => {
-        if (customersSuppliersData.call) {
-            fetchCustomersSuppliers();
-            setCustomersSuppliersData((prevData) => ({
-                ...prevData,
-                call: false,
-            }));
-        }
-    }, [customersSuppliersData.call]);
 
     const fetchCustomersSuppliers = () => {
         const pb = new PocketBase('http://127.0.0.1:8090');
         pb.collection('customers_suppliers')
             .getFullList({
                 expand: 'type, function'
-                // fields: 'id, type, function, name, city, address, cap, phone_number, email, piva, iban',
             })
             .then((response) => {
                 const updatedData: ICustomersSuppliers[] = response.map((record) => ({
@@ -58,8 +43,8 @@ const PageCustomersSuppliers = () => {
                         note: record.expand.type.note
                     },
                     function: {
-                        id: record.expand.type.id,
-                        name: record.expand.type.name
+                        id: record.expand.function.id,
+                        name: record.expand.function.name
                     },
                     name: record.name,
                     city: record.city,
@@ -70,24 +55,27 @@ const PageCustomersSuppliers = () => {
                     piva: record.piva,
                     iban: record.iban,
                 }));
-                setCustomersSuppliersData((prevData) => ({
-                    ...prevData,
-                    data: updatedData,
-                }));
-                console.log(customersSuppliersData)
+                setCustomersSuppliersData(updatedData);
             })
             .catch((error) => {
                 console.error('Errore durante la richiesta GET:', error);
             });
     };
 
+    const [showAddCustomersSuppliers, setShowAddCustomersSuppliers] = useState(false);
+    const handleShowAddResourceType = () => {
+        setShowAddCustomersSuppliers(!showAddCustomersSuppliers);
+    };
+
     return (
         <div className={`w-full mx-40 grid gap-4`}>
             <CustomPaper ec="m-3 flex justify-end gap-2">
-                <CustomButton type="button" text="Nuovo Cliente / Fornitore" icon={<MdAdd/>} onClick={fetchCustomersSuppliers}></CustomButton>
+                <CustomButton type="button" text="Nuovo Cliente / Fornitore" icon={<MdAdd/>} onClick={handleShowAddResourceType}></CustomButton>
             </CustomPaper>
 
-            <CmpTableCustomersSuppliers data={customersSuppliersData.data} onUpdate={fetchCustomersSuppliers}/>
+            <CmpAddEditInfoCustomersSuppliers show={showAddCustomersSuppliers} handleClose={handleShowAddResourceType} type="add" onUpdate={fetchCustomersSuppliers}/>
+
+            <CmpTableCustomersSuppliers data={customersSuppliersData} onUpdate={fetchCustomersSuppliers}/>
         </div>
     );
 };

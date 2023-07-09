@@ -85,7 +85,7 @@ const CmpAddEditResourceType : React.FC<ICmpAddResourceType> = (props) => {
         <CustomModal title={type === "add" ? "Inserimento Tipo Risorsa" : "Modifica Tipo Risorsa"} show={show} handleClose={handleClearAndClose}>
             <form className="" onSubmit={handleSubmit}>
                 <CustomInput
-                    ec="mt-2"
+                    ec="mt-1.5"
                     StartIcon={<MdTextFields/>}
                     title="Nome"
                     type="text"
@@ -99,7 +99,7 @@ const CmpAddEditResourceType : React.FC<ICmpAddResourceType> = (props) => {
                     }}
                 />
                 <CustomInput
-                    ec="mt-2"
+                    ec="mt-1.5"
                     title="Descrizione"
                     type="text"
                     placeholder="Descrizione"
@@ -113,7 +113,7 @@ const CmpAddEditResourceType : React.FC<ICmpAddResourceType> = (props) => {
                     }}
                 />
                 <CustomInput
-                    ec="mt-2"
+                    ec="mt-1.5"
                     title="Note"
                     placeholder="Note"
                     textArea
@@ -131,7 +131,7 @@ const CmpAddEditResourceType : React.FC<ICmpAddResourceType> = (props) => {
                         type="submit"
                         text={type === "add" ? "Aggiungi" : "Modifica"}
                         icon={type === "add" ? <MdAdd/> : <MdModeEdit/>}
-                        color="green"
+                        color={type === "add" ? "green": undefined}
                     />
                     <CustomButton
                         type="button"

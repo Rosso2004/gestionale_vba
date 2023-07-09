@@ -1,14 +1,9 @@
-import TableHead from "../table/TableHead";
-import TableRow from "../table/TableRow";
-import TableHeader from "../table/TableHeader";
-import TableBody from "../table/TableBody";
-import TableCell from "../table/TableCell";
 import CustomTable from "../table/CustomTable";
 import {IResourcesType} from "../../interfaces/IResourcesType";
 import CustomButton from "../CustomButton";
 import {MdDelete, MdModeEdit} from "react-icons/md"
 import CmpDeleteResourceType from "./CmpDeleteResourceType";
-import {useState} from "react";
+import {useCallback, useMemo, useState} from "react";
 import getIndex from "../../utility/getIndex";
 import CmpAddEditResourceType from "./CmpAddEditResourceType";
 
@@ -20,7 +15,7 @@ interface ICmpTableResourcesType {
 const CmpTableResourcesType: React.FC<ICmpTableResourcesType> = (props) => {
     const {data, onUpdate} = props
 
-    const [showActionResourceType, setShowActionResourceType] = useState<{ resourceTypeData: IResourcesType; show: {update: boolean; delete: boolean}}>({
+    const [showActionResourceType, setShowActionResourceType] = useState<{ resourceTypeData: IResourcesType; show: { update: boolean; delete: boolean } }>({
         resourceTypeData: {
             id: '',
             name: '',
@@ -32,7 +27,8 @@ const CmpTableResourcesType: React.FC<ICmpTableResourcesType> = (props) => {
             delete: false
         }
     });
-    const handleShowDeleteResourceType = (id: string | undefined, type: "update" | "delete") => {
+
+    const handleShowActionResourceType = useCallback((id: string | undefined, type: "update" | "delete") => {
         const indexPump = getIndex(data, "id", id)
         if (type === "update") {
             setShowActionResourceType({
@@ -51,7 +47,7 @@ const CmpTableResourcesType: React.FC<ICmpTableResourcesType> = (props) => {
                 }
             });
         }
-    };
+    }, [data, setShowActionResourceType]);
 
     const handleCancelActionResourceType = () => {
         setShowActionResourceType({
@@ -68,62 +64,83 @@ const CmpTableResourcesType: React.FC<ICmpTableResourcesType> = (props) => {
         });
     };
 
+    const tColumns = useMemo(
+        () => [
+            {
+                Header: '#',
+                accessor: 'id',
+            },
+            {
+                Header: 'Nome',
+                accessor: 'name',
+            },
+            {
+                Header: 'Descrizione',
+                accessor: 'description',
+            },
+            {
+                Header: 'Note',
+                accessor: 'note',
+            },
+            {
+                Header: 'Azioni',
+                disableFilters: true,
+                Cell: ({row}: any) => {
+                    const {values} = row;
+                    return (
+                        <>
+                            <CustomButton
+                                color="gray"
+                                type="button"
+                                ec="text-blue-700"
+                                onClick={() => {
+                                    handleShowActionResourceType(values.id, "update")
+                                }}
+                                icon={<MdModeEdit/>}
+                            />
+                            <CustomButton
+                                color="gray"
+                                type="button"
+                                ec="text-red-700"
+                                onClick={() => {
+                                    handleShowActionResourceType(values.id, "delete")
+                                }}
+                                icon={<MdDelete/>}
+                            />
+                        </>
+                    );
+                }
+            }
+        ],
+        [handleShowActionResourceType]
+    );
+
+    const tData = useMemo(() => data, [data])
+
     return (
-      <>
-        <CustomTable searchInput>
-            <TableHead>
-                <TableRow>
-                    <TableHeader head>
-                        Nome
-                    </TableHeader>
-                    <TableHeader head>
-                        Descrizione
-                    </TableHeader>
-                    <TableHeader head>
-                        Note
-                    </TableHeader>
-                    <TableHeader head>
-                        Azioni
-                    </TableHeader>
-                </TableRow>
-            </TableHead>
+        <>
+            <CustomTable
+                globalSearch
+                hiddenColumns={['id']}
+                columns={tColumns}
+                data={tData}
+            />
 
-            <TableBody>
-                {data.length === 0 ? (
-                      <TableRow containsCells>
-                        <TableCell colSpan={5}>Nessun elemento presente</TableCell>
-                      </TableRow>
-                ) : (
-                        data.map((row) => (
-                            <TableRow key={row.id} containsCells>
-                                <TableHeader>{row.name}</TableHeader>
-                                <TableCell>{row.description}</TableCell>
-                                <TableCell>{row.note}</TableCell>
-                                <TableCell action>
-                                    <CustomButton color="gray" type="button" onClick={() => {handleShowDeleteResourceType(row.id, "update")}} icon={<MdModeEdit/>}/>
-                                    <CustomButton color="gray" type="button" onClick={() => {handleShowDeleteResourceType(row.id, "delete")}} icon={<MdDelete/>}/>
-                                </TableCell>
-                            </TableRow>
-                        ))
-                )}
-            </TableBody>
-        </CustomTable>
+            <CmpAddEditResourceType
+                show={showActionResourceType.show.update}
+                data={showActionResourceType.resourceTypeData}
+                type="update"
+                handleClose={handleCancelActionResourceType}
+                onUpdate={onUpdate}
+            />
 
-        <CmpAddEditResourceType
-          show={showActionResourceType.show.update}
-          data={showActionResourceType.resourceTypeData}
-          type="update"
-          handleClose={handleCancelActionResourceType}
-          onUpdate={onUpdate}
-        />
-
-        <CmpDeleteResourceType
-          show={showActionResourceType.show.delete}
-          data={showActionResourceType.resourceTypeData}
-          handleCancel={handleCancelActionResourceType}
-          onUpdate={onUpdate}
-        />
-      </>
+            <CmpDeleteResourceType
+                show={showActionResourceType.show.delete}
+                data={showActionResourceType.resourceTypeData}
+                handleCancel={handleCancelActionResourceType}
+                onUpdate={onUpdate}
+            />
+        </>
     );
 };
 

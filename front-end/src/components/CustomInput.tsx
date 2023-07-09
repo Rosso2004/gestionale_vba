@@ -12,12 +12,13 @@ interface ICustomInput {
     EndIcon?: React.ReactNode
     disabled?: boolean;
     error?: string;
+    size?: "xs";
     onChange?: (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
     value?: string;
 }
 
 const CustomInput: React.FC<ICustomInput> = (props) => {
-    const {ec, id, type, title, textArea, placeholder, StartIcon, EndIcon, disabled, error, onChange, value} = props;
+    const {ec, id, type, title, textArea, placeholder, StartIcon, EndIcon, size, disabled, error, onChange, value} = props;
     const [passwordShow, setPasswordShow] = useState(false);
 
     const togglePassword = () => {
@@ -26,7 +27,7 @@ const CustomInput: React.FC<ICustomInput> = (props) => {
     return (
         <div className={`text-left ${ec}`}>
             {title && (
-            <label className={`block mb-2 text-sm font-medium dark:text-white ${error ? 'text-red-700' : 'text-gray-900'}`}>{title}</label>
+            <label className={`block text-sm font-medium dark:text-white ${error ? 'text-red-700' : 'text-gray-900'}`}>{title}</label>
             )}
             <div className="relative">
                 {StartIcon && (
@@ -56,12 +57,18 @@ const CustomInput: React.FC<ICustomInput> = (props) => {
                     onChange={onChange}
                     value={value}
                     disabled={disabled}
-                    className={`border text-gray-900 text-sm rounded-lg block w-full p-2.5
+                    className={`border text-sm rounded-lg block w-full
+                    ${
+                        disabled ? 'text-gray-400 bg-gray-50 border border-gray-200 focus:ring-gray-500 focus:border-gray-500' : 'text-gray-900 bg-gray-50 border border-gray-300 focus:ring-gray-500 focus:border-gray-500'
+                    }
+                    ${
+                        size === "xs" ? 'p-1' : 'p-1.5'
+                    }
                     ${
                         StartIcon ? 'pl-10' : ''
                     }
                     ${
-                        error ? 'border-red-500 placeholder-red-700 focus:ring-red-500 focus:border-red-500' : 'bg-gray-50 border border-gray-300 focus:ring-gray-500 focus:border-gray-500'
+                        error ? 'border-red-500 placeholder-red-700 focus:ring-red-500 focus:border-red-500' : ''
                     }`}
                     placeholder={placeholder}
                 />)}
