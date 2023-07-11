@@ -5,7 +5,7 @@ interface IPCustomButton {
     text?: string;
     icon?: React.ReactNode;
     onClick?: () => void;
-    color?: "red" | "green" | "gray";
+    color?: "red" | "green" | "gray" | "transparent";
     disabled?: boolean;
 }
 
@@ -18,6 +18,7 @@ const CustomButton: React.FC<IPCustomButton> = (props) => {
             ${color === "green" && 'text-white bg-green-700 hover:bg-green-800'}
             ${color === "red" && 'text-white bg-red-700 hover:bg-red-800'}
             ${color === "gray" && 'bg-gray-100 hover:bg-gray-200'}
+            ${color === "transparent" && ''}
             ${!color && 'text-white bg-blue-700 hover:bg-blue-800'}`
         }>
             {icon && (

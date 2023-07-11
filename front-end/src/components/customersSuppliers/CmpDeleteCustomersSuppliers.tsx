@@ -1,5 +1,4 @@
 import CustomAlertDialog from "../CustomAlertDialog";
-import {IResourcesType} from "../../interfaces/IResourcesType";
 import PocketBase from 'pocketbase';
 import {ICustomersSuppliers} from "../../interfaces/ICustomersSuppliers";
 

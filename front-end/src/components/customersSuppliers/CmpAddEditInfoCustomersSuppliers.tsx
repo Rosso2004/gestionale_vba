@@ -14,9 +14,7 @@ import {
     MdSignpost,
     MdTextFields
 } from "react-icons/md";
-import {IResourcesType} from "../../interfaces/IResourcesType";
 import {ICustomersSuppliers} from "../../interfaces/ICustomersSuppliers";
-import {IResourcesFunction} from "../../interfaces/IResourcesFunction";
 import CustomSelect from "../CustomSelect";
 
 interface ICmpAddEditInfoCustomersSuppliers {
@@ -139,7 +137,7 @@ const CmpAddEditInfoCustomersSuppliers : React.FC<ICmpAddEditInfoCustomersSuppli
             piva: formData.phone_number,
             iban: formData.email,
         };
-        console.log(dataToSubmit)
+
         if (type === "add") {
             try {
                 const record = await pb.collection('customers_suppliers').create(dataToSubmit);

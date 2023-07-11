@@ -4,9 +4,7 @@ import {MdDelete, MdInfoOutline, MdModeEdit} from "react-icons/md"
 import {useMemo, useState} from "react";
 import getIndex from "../../utility/getIndex";
 import {ICustomersSuppliers} from "../../interfaces/ICustomersSuppliers";
-import CmpAddEditResourceType from "../resourcesType/CmpAddEditResourceType";
 import CmpAddEditInfoCustomersSuppliers from "./CmpAddEditInfoCustomersSuppliers";
-import CmpDeleteResourceType from "../resourcesType/CmpDeleteResourceType";
 import CmpDeleteCustomersSuppliers from "./CmpDeleteCustomersSuppliers";
 
 interface ICmpTableCustomersSuppliers {
@@ -176,7 +174,6 @@ const CmpTableCustomersSuppliers: React.FC<ICmpTableCustomersSuppliers> = (props
 
     const tData = useMemo(() => data, [data])
 
-    console.log(data)
     return (
         <>
             <CustomTable

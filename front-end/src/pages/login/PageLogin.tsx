@@ -3,46 +3,69 @@ import { useNavigate } from 'react-router-dom';
 import CustomInput from "../../components/CustomInput";
 import { MdEmail, MdLock, MdLogin} from "react-icons/md";
 import CustomButton from "../../components/CustomButton";
-import PocketBase from 'pocketbase';
 import {useGlobalState} from "../../global/GlobalStateContext";
+import axios from "axios";
+
+interface IFormData {
+    emailUsername: string;
+    password: string;
+    error: {
+        emailUsername: string;
+        password: string;
+    }
+}
 
 const PageLogin = () => {
     const navigate = useNavigate();
 
     const { setIsVerified } = useGlobalState();
 
-    //Stati che salvano il contenuto degliinput tramite onChange
-    const [emailValue, setEmailValue] = useState('simone.rosso004@gmail.com');
-    const [passwordValue, setPasswordValue] = useState('Simone04');
-
-    //Stato per il tipo di errore ricevuto dal backend
-    const [wrongCredential, setWrongCredential] = useState('');
+    const [formData, setFormData] = useState<IFormData>({
+        emailUsername: 'simone.rosso004@gmail.com',
+        password: 'Simone04',
+        error: {
+            emailUsername: '',
+            password: ''
+        }
+    })
 
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
-        const pb = new PocketBase('http://127.0.0.1:8090');
-        try {
-            // const authData =
-            const authData = await pb.collection('users').authWithPassword(emailValue, passwordValue);
 
-            setWrongCredential('');
-            // console.log('Autenticazione riuscita');
-            // console.log(pb.authStore.isValid);
-            console.log("auto: ", authData);
-
-            if (pb.authStore.isValid) {
-                setIsVerified(true)
-                navigate('/dashboard');
-            }
-
-            pb.authStore.clear();
-        } catch (error) {
-            const errorObj: Error = error as Error;
-            if (errorObj.message === 'Failed to authenticate.') {
-                setWrongCredential('Credenzieli errate')
-                setIsVerified(false)
-            }
+        const toSubmit = {
+            email: formData.emailUsername,
+            username: formData.emailUsername,
+            password: formData.password
         }
+
+        axios
+            .post('http://localhost:5000/api/user/verifyUser', toSubmit)
+            .then((response)=>{
+                if (response.status === 200) {
+                    setIsVerified(true)
+                    navigate('/dashboard');
+                }
+            })
+            .catch((error) => {
+                console.log(error.er)
+                if (error.response.status === 404) {
+                    setFormData((prevData) => ({
+                        ...prevData,
+                        error: {
+                            emailUsername: error.response.data,
+                            password: ''
+                        }
+                    }));
+                } else if (error.response.status === 401) {
+                    setFormData((prevData) => ({
+                        ...prevData,
+                        error: {
+                            emailUsername: '',
+                            password: error.response.data
+                        }
+                    }));
+                }
+            });
     };
 
     return (
@@ -53,14 +76,16 @@ const PageLogin = () => {
                 <div className="flex flex-col items-center">
                 <CustomInput
                     ec="mb-2 w-80"
-                    type="email"
-                    title="Email"
+                    title="Email o Username"
                     placeholder="Inserisci la tua email"
                     StartIcon={<MdEmail/>}
-                    value={emailValue}
-                    error={wrongCredential}
+                    value={formData.emailUsername}
+                    error={formData.error.emailUsername}
                     onChange={(e) => {
-                        setEmailValue(e.target.value);
+                        setFormData((prevData) => ({
+                            ...prevData,
+                            emailUsername: e.target.value
+                        }));
                     }}
                 />
 
@@ -70,10 +95,13 @@ const PageLogin = () => {
                     title="Password"
                     placeholder="Inserisci la tua password"
                     StartIcon={<MdLock/>}
-                    value={passwordValue}
-                    error={wrongCredential}
+                    value={formData.password}
+                    error={formData.error.password}
                     onChange={(e) => {
-                        setPasswordValue(e.target.value);
+                        setFormData((prevData) => ({
+                            ...prevData,
+                            password: e.target.value
+                        }));
                     }}
                 />
                 <CustomButton

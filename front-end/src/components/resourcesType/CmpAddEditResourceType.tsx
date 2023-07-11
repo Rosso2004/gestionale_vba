@@ -1,10 +1,11 @@
 import CustomInput from "../CustomInput";
 import CustomButton from "../CustomButton";
 import CustomModal from "../CustomModal";
-import PocketBase from 'pocketbase';
 import {useEffect, useState} from "react";
 import {MdAdd, MdCancel, MdModeEdit, MdTextFields} from "react-icons/md";
 import {IResourcesType} from "../../interfaces/IResourcesType";
+import axios from "axios";
+import CustomAlert from "../CustomAlert";
 
 interface ICmpAddResourceType {
     show: boolean;
@@ -22,6 +23,8 @@ const CmpAddEditResourceType : React.FC<ICmpAddResourceType> = (props) => {
         note: ''
     })
 
+    const [nameError, setNameError] = useState<string>('')
+
     useEffect(() => {
         if (type === "update") {
             setFormData({
@@ -35,45 +38,44 @@ const CmpAddEditResourceType : React.FC<ICmpAddResourceType> = (props) => {
 
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
-        const pb = new PocketBase('http://127.0.0.1:8090');
-        const dataToSubmit = {
-            name: formData.name,
-            description: formData.description,
-            note: formData.note,
-        };
         if (type === "add") {
-            try {
-                const record = await pb.collection('resources_type').create(dataToSubmit);
-
-                if (record) {
-                    handleClearAndClose();
-                    onUpdate();
-                }
-            } catch (error) {
-                const errorObj: Error = error as Error;
-                console.log("error: ", errorObj)
-            }
-        } else if (type === "update") {
-            if (data?.id) {
-                try {
-                    const record = await pb.collection('resources_type').update(data.id, dataToSubmit);
-
-                    if (record) {
+            axios
+                .post("http://localhost:5000/api/resourceType/createResourceType", formData)
+                .then((response) => {
+                    if (response.status === 200) {
                         handleClearAndClose();
                         onUpdate();
                     }
-                } catch (error) {
-                    const errorObj: Error = error as Error;
-                    console.log("error: ", errorObj)
-                }
+                })
+                .catch((error) => {
+                    if (error.response.status === 409) {
+                        setNameError(error.response.data)
+                    }
+                });
+        } else if (type === "update") {
+            if (data?.id) {
+                axios
+                    .put("http://localhost:5000/api/resourceType/updateResourceType/" + data.id, formData)
+                    .then((response) => {
+                        if (response.status === 200) {
+                            handleClearAndClose();
+                            onUpdate();
+                        }
+                    })
+                    .catch((error) => {
+                        if (error.response.status === 409) {
+                            setNameError(error.response.data)
+                        }
+                    });
             } else {
-                console.log("ID non definito");
+                console.log("L'ID del tipo risorsa da modificare non definito");
             }
         }
     }
 
     const handleClearAndClose = () => {
         handleClose();
+        setNameError('');
         setFormData({
             id:'',
             name: '',
@@ -81,6 +83,7 @@ const CmpAddEditResourceType : React.FC<ICmpAddResourceType> = (props) => {
             note: ''
         })
     }
+
     return (
         <CustomModal title={type === "add" ? "Inserimento Tipo Risorsa" : "Modifica Tipo Risorsa"} show={show} handleClose={handleClearAndClose}>
             <form className="" onSubmit={handleSubmit}>
@@ -90,6 +93,7 @@ const CmpAddEditResourceType : React.FC<ICmpAddResourceType> = (props) => {
                     title="Nome"
                     type="text"
                     placeholder="Nome"
+                    error={nameError}
                     value={formData.name}
                     onChange={(e) => {
                         setFormData((prevData) => ({
@@ -142,6 +146,7 @@ const CmpAddEditResourceType : React.FC<ICmpAddResourceType> = (props) => {
                     />
                 </div>
             </form>
+            <CustomAlert/>
         </CustomModal>
     );
 };

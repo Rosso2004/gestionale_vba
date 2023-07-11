@@ -4,10 +4,10 @@ import CustomButton from "../components/CustomButton";
 import {MdAdd} from "react-icons/md";
 import {useState, useEffect} from "react";
 import CmpAddEditResourceType from "../components/resourcesType/CmpAddEditResourceType";
-import PocketBase from 'pocketbase';
 import CmpTableResourcesType from "../components/resourcesType/CmpTableResourcesType";
 import {useNavigate} from "react-router-dom";
 import {IResourcesType} from "../interfaces/IResourcesType"
+import axios from "axios";
 
 const PageResourcesType = () => {
     const navigate = useNavigate();
@@ -26,22 +26,13 @@ const PageResourcesType = () => {
     }, []);
 
     const fetchResources = () => {
-        const pb = new PocketBase('http://127.0.0.1:8090');
-        pb.collection('resources_type')
-            .getFullList({
-                fields: 'id, name, description, note',
-            })
+        axios
+            .get("http://localhost:5000/api/resourceType/getAllResourceType")
             .then((response) => {
-                const updatedData: IResourcesType[] = response.map((record) => ({
-                    id: record.id,
-                    name: record.name,
-                    description: record.description,
-                    note: record.note,
-                }));
-                setResourcesTypeData(updatedData);
+                setResourcesTypeData(response.data);
             })
             .catch((error) => {
-                console.error('Errore durante la richiesta GET:', error);
+                console.error("Errore nel ricavare le i Tipi Risorsa: ", error);
             });
     };
 

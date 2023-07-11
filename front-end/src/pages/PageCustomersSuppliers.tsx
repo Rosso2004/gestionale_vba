@@ -6,8 +6,6 @@ import PocketBase from "pocketbase";
 import CustomPaper from "../components/CutomPaper";
 import CustomButton from "../components/CustomButton";
 import {MdAdd} from "react-icons/md";
-import CmpAddEditResourceType from "../components/resourcesType/CmpAddEditResourceType";
-import CmpTableResourcesType from "../components/resourcesType/CmpTableResourcesType";
 import CmpTableCustomersSuppliers from "../components/customersSuppliers/CmpTableCustomersSuppliers";
 import CmpAddEditInfoCustomersSuppliers from "../components/customersSuppliers/CmpAddEditInfoCustomersSuppliers";
 
