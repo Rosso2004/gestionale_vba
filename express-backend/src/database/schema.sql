@@ -2,7 +2,7 @@
 -- Host:                         127.0.0.1
 -- Versione server:              10.4.28-MariaDB - mariadb.org binary distribution
 -- S.O. server:                  Win64
--- HeidiSQL Versione:            12.5.0.6677
+-- HeidiSQL Versione:            12.3.0.6589
 -- --------------------------------------------------------
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
@@ -37,7 +37,7 @@ CREATE TABLE IF NOT EXISTS `customers_suppliers` (
   KEY `FK_customers_suppliers_resources_function` (`fnc`) USING BTREE,
   CONSTRAINT `FK_customers_suppliers_resources_function` FOREIGN KEY (`fnc`) REFERENCES `resources_function` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `FK_customers_suppliers_resources_type` FOREIGN KEY (`type`) REFERENCES `resources_type` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=69 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=72 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- Dump dei dati della tabella gestionale_vba.customers_suppliers: ~52 rows (circa)
 INSERT INTO `customers_suppliers` (`id`, `type`, `fnc`, `name`, `city`, `address`, `cap`, `phone_number`, `email`, `piva`, `iban`) VALUES
@@ -94,6 +94,48 @@ INSERT INTO `customers_suppliers` (`id`, `type`, `fnc`, `name`, `city`, `address
 	(67, 18, 1, 'F.lli Chiaramello trasporti', 'Torino', 'c.so Francia 17', '10138', '', '', '12273890017', ''),
 	(68, 18, 1, 'Easytec', 'Scalenghe TO', 'Via Agnelli Senatore Avvocato Giovanni, 6', '10060', '0119866372', 'info@easytec.it', '11175170015', '');
 
+-- Dump della struttura di tabella gestionale_vba.orders
+CREATE TABLE IF NOT EXISTS `orders` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `manager` int(11) NOT NULL,
+  `customer` int(11) NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `status` int(11) NOT NULL,
+  `type` int(11) NOT NULL,
+  `start_date` varchar(255) NOT NULL,
+  `end_date` varchar(255) DEFAULT NULL,
+  `note` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `FK_orders_users` (`manager`),
+  KEY `FK_orders_customers_suppliers` (`customer`),
+  KEY `FK_orders_orders_status` (`status`),
+  KEY `FK_orders_orders_types` (`type`),
+  CONSTRAINT `FK_orders_customers_suppliers` FOREIGN KEY (`customer`) REFERENCES `customers_suppliers` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `FK_orders_orders_status` FOREIGN KEY (`status`) REFERENCES `orders_status` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `FK_orders_orders_types` FOREIGN KEY (`type`) REFERENCES `orders_types` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `FK_orders_users` FOREIGN KEY (`manager`) REFERENCES `users` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- Dump dei dati della tabella gestionale_vba.orders: ~0 rows (circa)
+
+-- Dump della struttura di tabella gestionale_vba.orders_status
+CREATE TABLE IF NOT EXISTS `orders_status` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- Dump dei dati della tabella gestionale_vba.orders_status: ~0 rows (circa)
+
+-- Dump della struttura di tabella gestionale_vba.orders_types
+CREATE TABLE IF NOT EXISTS `orders_types` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- Dump dei dati della tabella gestionale_vba.orders_types: ~0 rows (circa)
+
 -- Dump della struttura di tabella gestionale_vba.resources_function
 CREATE TABLE IF NOT EXISTS `resources_function` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -114,12 +156,12 @@ CREATE TABLE IF NOT EXISTS `resources_type` (
   `description` varchar(255) DEFAULT NULL,
   `note` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=32 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- Dump dei dati della tabella gestionale_vba.resources_type: ~2 rows (circa)
 INSERT INTO `resources_type` (`id`, `name`, `description`, `note`) VALUES
 	(18, 'Generico', '', ''),
-	(19, 'Grossista Elettrico', '', '');
+	(29, 'Grossista Elettrico', '', '');
 
 -- Dump della struttura di tabella gestionale_vba.users
 CREATE TABLE IF NOT EXISTS `users` (
@@ -131,12 +173,12 @@ CREATE TABLE IF NOT EXISTS `users` (
   `phone_number` varchar(255) DEFAULT NULL,
   `password` varchar(255) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=32 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=34 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- Dump dei dati della tabella gestionale_vba.users: ~2 rows (circa)
 INSERT INTO `users` (`id`, `lastname`, `firstname`, `username`, `email`, `phone_number`, `password`) VALUES
-	(30, 'Rosso', 'Simone', 'simone', 'simone@gmail.com', '', '$2b$10$ZWYnayjfUBHaqhk/bcKVl.KXt5atQnziklCSApOSnKNrJ9qnz9Tli'),
-	(31, 'Visca', 'Matteo', 'matteo', 'matteo@gmail.com', '', '$2b$10$GjNLRaNmBbUpxLYUl9isSeZ4yGYD1Qe6a3KbYEdD9RcBY0CO5bG/a');
+	(30, 'Rosso', 'Simone', 'simone', 'simone@gmail.com', '0', '$2b$10$ZWYnayjfUBHaqhk/bcKVl.KXt5atQnziklCSApOSnKNrJ9qnz9Tli'),
+	(31, 'Visca', 'Matteo', 'matteo', 'matteo@gmail.com', 'dsa', '$2b$10$GjNLRaNmBbUpxLYUl9isSeZ4yGYD1Qe6a3KbYEdD9RcBY0CO5bG/a');
 
 /*!40103 SET TIME_ZONE=IFNULL(@OLD_TIME_ZONE, 'system') */;
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
