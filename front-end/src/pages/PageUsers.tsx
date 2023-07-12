@@ -8,6 +8,8 @@ import axios from "axios";
 import {IUsers} from "../interfaces/IUsers";
 import CmpTableUsers from "../components/users/CmpTableUsers";
 import CmpAddEditUser from "../components/users/CmpAddEditUser";
+import {toast} from "react-toastify";
+import success = toast.success;
 
 const PageUsers = () => {
     const navigate = useNavigate();
@@ -32,7 +34,7 @@ const PageUsers = () => {
                 setUsersData(response.data);
             })
             .catch((error) => {
-                console.error("Errore nel ricavare le gli utentu: ", error);
+                toast.error(error)
             });
     };
 

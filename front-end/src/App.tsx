@@ -8,6 +8,8 @@ import PageResourcesType from "./pages/PageResourcesType";
 import CmpLayout from "./components/layout/CmpLayout";
 import PageCustomersSuppliers from "./pages/PageCustomersSuppliers";
 import PageUsers from "./pages/PageUsers";
+import {ToastContainer} from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const App = () => {
     const {titlePage} = useGlobalState()
@@ -23,6 +25,20 @@ const App = () => {
                 <Route path='/resources_type' element={<PageResourcesType/>}/>
                 <Route path='/customers_suppliers' element={<PageCustomersSuppliers/>}/>
             </Routes>
+            <ToastContainer
+                position="bottom-right"
+                autoClose={6000}
+                limit={3}
+                hideProgressBar={false}
+                newestOnTop={false}
+                closeOnClick
+                rtl={false}
+                pauseOnFocusLoss
+                draggable
+                pauseOnHover
+                theme="light"
+                className="text-left"
+            />
         </CmpLayout>
 
     )

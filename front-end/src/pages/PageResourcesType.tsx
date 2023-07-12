@@ -8,6 +8,7 @@ import CmpTableResourcesType from "../components/resourcesType/CmpTableResources
 import {useNavigate} from "react-router-dom";
 import {IResourcesType} from "../interfaces/IResourcesType"
 import axios from "axios";
+import {toast} from "react-toastify";
 
 const PageResourcesType = () => {
     const navigate = useNavigate();
@@ -32,7 +33,7 @@ const PageResourcesType = () => {
                 setResourcesTypeData(response.data);
             })
             .catch((error) => {
-                console.error("Errore nel ricavare le i Tipi Risorsa: ", error);
+                toast.error(error.response.data)
             });
     };
 

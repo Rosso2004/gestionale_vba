@@ -18,6 +18,7 @@ import CustomSelect from "../CustomSelect";
 import axios from "axios";
 import {IResourcesType} from "../../interfaces/IResourcesType";
 import {IResourcesFunction} from "../../interfaces/IResourcesFunction";
+import {toast} from "react-toastify";
 
 interface ICmpAddEditInfoCustomersSuppliers {
     show: boolean;
@@ -105,7 +106,7 @@ const CmpAddEditInfoCustomersSuppliers : React.FC<ICmpAddEditInfoCustomersSuppli
                 }));
             })
             .catch((error) => {
-                console.error("Errore nel ricavare le i Tipi Risorsa: ", error);
+                toast.error(error);
             });
         axios
             .get(import.meta.env.VITE_URL_WEB_API + '/api/resourceFunction/getAllResourceFunction')
@@ -120,7 +121,7 @@ const CmpAddEditInfoCustomersSuppliers : React.FC<ICmpAddEditInfoCustomersSuppli
                 }));
             })
             .catch((error) => {
-                console.error("Errore nel ricavare le le Funzioni Risorsa: ", error);
+                toast.error(error);
             });
     }
 
@@ -141,15 +142,17 @@ const CmpAddEditInfoCustomersSuppliers : React.FC<ICmpAddEditInfoCustomersSuppli
         };
 
         if (toSubmit.type === '') {
-            setError((prevData) => ({
-                ...prevData,
+            setError({
+                name: '',
+                fnc: '',
                 type: 'Il valore di questo campo non è valido'
-            }))
+            })
         } else if (toSubmit.fnc === '') {
-            setError((prevData) => ({
-                ...prevData,
+            setError({
+                name: '',
+                type: '',
                 fnc: 'Il valore di questo campo non è valido'
-            }))
+            })
         } else {
             if (type === "add") {
                 axios
@@ -158,14 +161,17 @@ const CmpAddEditInfoCustomersSuppliers : React.FC<ICmpAddEditInfoCustomersSuppli
                         if (response.status === 200) {
                             handleClearAndClose();
                             onUpdate();
+                            toast.success(response.data.message);
                         }
                     })
                     .catch((error) => {
                         if (error.response.status === 409) {
-                            setError((prevData) => ({
-                                ...prevData,
+                            setError({
+                                fnc: '',
+                                type: '',
                                 name: error.response.data
-                            }))
+                            })
+                            toast.error(error.response.data);
                         }
                     });
             } else if (type === "update") {
@@ -176,14 +182,17 @@ const CmpAddEditInfoCustomersSuppliers : React.FC<ICmpAddEditInfoCustomersSuppli
                             if (response.status === 200) {
                                 handleClearAndClose();
                                 onUpdate();
+                                toast.success(response.data.message);
                             }
                         })
                         .catch((error) => {
                             if (error.response.status === 409) {
-                                setError((prevData) => ({
-                                    ...prevData,
+                                setError({
+                                    fnc: '',
+                                    type: '',
                                     name: error.response.data
-                                }))
+                                })
+                                toast.error(error.response.data);
                             }
                         });
                 } else {

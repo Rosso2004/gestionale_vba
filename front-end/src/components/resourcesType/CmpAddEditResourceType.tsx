@@ -5,6 +5,7 @@ import {useEffect, useState} from "react";
 import {MdAdd, MdCancel, MdModeEdit, MdTextFields} from "react-icons/md";
 import {IResourcesType} from "../../interfaces/IResourcesType";
 import axios from "axios";
+import {toast} from "react-toastify";
 
 interface ICmpAddResourceType {
     show: boolean;
@@ -21,12 +22,6 @@ const CmpAddEditResourceType : React.FC<ICmpAddResourceType> = (props) => {
         description: '',
         note: ''
     })
-
-    // const [alertData, setAlertData] = useState<IAlert>({
-    //     open: false,
-    //     type: 'success',
-    //     text: ''
-    // })
 
     const [nameError, setNameError] = useState<string>('')
 
@@ -49,18 +44,15 @@ const CmpAddEditResourceType : React.FC<ICmpAddResourceType> = (props) => {
                 .post(import.meta.env.VITE_URL_WEB_API + '/api/resourceType/createResourceType', formData)
                 .then((response) => {
                     if (response.status === 200) {
-                        // setAlertData({
-                        //     open: true,
-                        //     type: 'success',
-                        //     text: response.data.message
-                        // });
                         handleClearAndClose();
                         onUpdate();
+                        toast.success(response.data.message)
                     }
                 })
                 .catch((error) => {
                     if (error.response.status === 409) {
                         setNameError(error.response.data)
+                        toast.error(error.response.data)
                     }
                 });
         } else if (type === "update") {
@@ -71,11 +63,13 @@ const CmpAddEditResourceType : React.FC<ICmpAddResourceType> = (props) => {
                         if (response.status === 200) {
                             handleClearAndClose();
                             onUpdate();
+                            toast.success(response.data.message)
                         }
                     })
                     .catch((error) => {
                         if (error.response.status === 409) {
                             setNameError(error.response.data)
+                            toast.error(error.response.data)
                         }
                     });
             } else {
@@ -159,18 +153,6 @@ const CmpAddEditResourceType : React.FC<ICmpAddResourceType> = (props) => {
                     </div>
                 </form>
             </CustomModal>
-
-            {/*<CustomAlert*/}
-            {/*    open={alertData.open}*/}
-            {/*    type={alertData.type}*/}
-            {/*    text={alertData.text}*/}
-            {/*    onClose={() => {*/}
-            {/*        setAlertData((prevData) => ({*/}
-            {/*            ...prevData,*/}
-            {/*            open: false*/}
-            {/*        }));*/}
-            {/*    }*/}
-            {/*}/>*/}
         </>
     );
 };

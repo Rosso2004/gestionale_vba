@@ -1,6 +1,7 @@
 import CustomAlertDialog from "../CustomAlertDialog";
 import axios from "axios";
 import {IUsers} from "../../interfaces/IUsers";
+import {toast} from "react-toastify";
 
 type ICmpDeleteUser = {
     show: boolean;
@@ -17,12 +18,13 @@ const CmpDeleteUser: React.FC<ICmpDeleteUser> = (props) => {
                 if (response.status === 200) {
                     onUpdate();
                     handleCancel();
-                    console.log(response.data.message)
+                    toast.warning(response.data.message)
                 }
             })
             .catch((error) => {
                 if (error.response.status === 404) {
                     console.log(error.response.data)
+                    toast.error(error.response.data)
                 }
             });
     }

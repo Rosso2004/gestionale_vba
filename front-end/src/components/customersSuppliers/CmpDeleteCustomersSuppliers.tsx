@@ -1,6 +1,7 @@
 import CustomAlertDialog from "../CustomAlertDialog";
 import {ICustomersSuppliers} from "../../interfaces/ICustomersSuppliers";
 import axios from "axios";
+import {toast} from "react-toastify";
 
 type ICmpDeleteResourceType = {
     show: boolean;
@@ -17,12 +18,12 @@ const CmpDeleteCustomersSuppliers: React.FC<ICmpDeleteResourceType> = (props) =>
                 if (response.status === 200) {
                     onUpdate();
                     handleCancel();
-                    console.log(response.data.message)
+                    toast.warning(response.data.message);
                 }
             })
             .catch((error) => {
                 if (error.response.status === 404) {
-                    console.log(error.response.data)
+                    toast.error(error.response.data);
                 }
             });
     }

@@ -14,6 +14,7 @@ import {
 } from "react-icons/md";
 import axios from "axios";
 import {IUsers} from "../../interfaces/IUsers";
+import {toast} from "react-toastify";
 
 interface ICmpAddEditUser {
     show: boolean;
@@ -63,11 +64,16 @@ const CmpAddEditUser : React.FC<ICmpAddEditUser> = (props) => {
                     if (response.status === 200) {
                         handleClearAndClose();
                         onUpdate();
+                        toast.success(response.data.message)
                     }
                 })
                 .catch((error) => {
                     if (error.response.status === 409) {
-                        console.log("error")
+                        setError({
+                            userEmail: error.response.data,
+                            password: ''
+                        })
+                        toast.error(error.response.data)
                     }
                 });
         } else if (type === "update") {
@@ -78,21 +84,23 @@ const CmpAddEditUser : React.FC<ICmpAddEditUser> = (props) => {
                         if (response.status === 200) {
                             handleClearAndClose();
                             onUpdate();
+                            toast.success(response.data.message)
                         }
                     })
                     .catch((error) => {
-                        console.log("passo")
                         if (error.response.status === 409) {
                             setError({
                                 userEmail: error.response.data,
                                 password: ''
                             })
+                            toast.error(error.response.data)
                         }
                         if (error.response.status === 401) {
                             setError({
                                 userEmail: '',
                                 password: error.response.data
                             })
+                            toast.error(error.response.data)
                         }
                     });
             } else {

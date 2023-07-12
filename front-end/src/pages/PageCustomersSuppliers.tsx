@@ -8,6 +8,7 @@ import {MdAdd} from "react-icons/md";
 import CmpTableCustomersSuppliers from "../components/customersSuppliers/CmpTableCustomersSuppliers";
 import CmpAddEditInfoCustomersSuppliers from "../components/customersSuppliers/CmpAddEditInfoCustomersSuppliers";
 import axios from "axios";
+import {toast} from "react-toastify";
 
 const PageCustomersSuppliers = () => {
     const navigate = useNavigate();
@@ -32,7 +33,7 @@ const PageCustomersSuppliers = () => {
                 setCustomersSuppliersData(response.data);
             })
             .catch((error) => {
-                console.error("Errore nel ricavare le le Risorse: ", error);
+                toast.error(error);
             });
     };
 
