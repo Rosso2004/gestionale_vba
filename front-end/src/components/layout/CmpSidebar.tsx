@@ -29,11 +29,18 @@ const CmpSidebar = () => {
                             <span className="ml-3">Dashboard</span>
                         </div>
                     </li>
-                    <li onClick={() => handleClickNav("GestioneCommesse", "/orders_management")}>
+                    <li onClick={() => handleClickNav("Gestione Commesse", "/orders_management")}>
                         <div
                            className="flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100">
                             <span className="text-gray-500"><MdTopic/></span>
                             <span className="ml-3">Gestione Commesse</span>
+                        </div>
+                    </li>
+                    <li onClick={() => handleClickNav("Gestione Utenti", "/users")}>
+                        <div
+                            className="flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100">
+                            <span className="text-gray-500"><MdPeople/></span>
+                            <span className="ml-3">Gestione Utenti</span>
                         </div>
                     </li>
                     <li>
@@ -53,7 +60,7 @@ const CmpSidebar = () => {
                                     <span className="ml-3">Tipo Risorse</span>
                                 </div>
                             </li>
-                            <li onClick={() => handleClickNav("Tipo Attività", "/tipoAttivita")}>
+                            <li onClick={() => handleClickNav("Tipo Attività", "/activities_type")}>
                                 <div
                                    className="flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100 ml-3">
                                     <span className="text-gray-500"><MdConstruction/></span>

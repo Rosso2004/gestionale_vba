@@ -1,7 +1,6 @@
 import CustomInput from "../CustomInput";
 import CustomButton from "../CustomButton";
 import CustomModal from "../CustomModal";
-import PocketBase from 'pocketbase';
 import {useEffect, useState} from "react";
 import {
     MdAccountBalance,
@@ -16,6 +15,9 @@ import {
 } from "react-icons/md";
 import {ICustomersSuppliers} from "../../interfaces/ICustomersSuppliers";
 import CustomSelect from "../CustomSelect";
+import axios from "axios";
+import {IResourcesType} from "../../interfaces/IResourcesType";
+import {IResourcesFunction} from "../../interfaces/IResourcesFunction";
 
 interface ICmpAddEditInfoCustomersSuppliers {
     show: boolean;
@@ -23,11 +25,6 @@ interface ICmpAddEditInfoCustomersSuppliers {
     data?: ICustomersSuppliers;
     type: "add" | "update" | "info";
     onUpdate: () => void;
-}
-
-interface ISelectInputData {
-    type: {label: string; value: string;}[];
-    function:  {label: string; value: string;}[];
 }
 const CmpAddEditInfoCustomersSuppliers : React.FC<ICmpAddEditInfoCustomersSuppliers> = (props) => {
     const {show, handleClose, type, data, onUpdate} = props;
@@ -39,7 +36,7 @@ const CmpAddEditInfoCustomersSuppliers : React.FC<ICmpAddEditInfoCustomersSuppli
             description: '',
             note: ''
         },
-        function: {
+        fnc: {
             id: '',
             name: '',
         },
@@ -52,10 +49,18 @@ const CmpAddEditInfoCustomersSuppliers : React.FC<ICmpAddEditInfoCustomersSuppli
         piva: '',
         iban: ''
     })
-    const [selectInputData, setSelectInputData] = useState<ISelectInputData>({
+
+    const [selectInputData, setSelectInputData] = useState({
         type: [],
-        function: [],
+        fnc: [],
     })
+
+    const [error, setError] = useState({
+        type: '',
+        fnc: '',
+        name: ''
+    })
+
 
     useEffect(() => {
         getResourcesTypeAndResourcesFunction()
@@ -68,9 +73,9 @@ const CmpAddEditInfoCustomersSuppliers : React.FC<ICmpAddEditInfoCustomersSuppli
                     description: data?.type.description || '',
                     note: data?.type.note || ''
                 },
-                function: {
-                    id: data?.function.id || '',
-                    name: data?.function.name || '',
+                fnc: {
+                    id: data?.fnc.id || '',
+                    name: data?.fnc.name || '',
                 },
                 name: data?.name || '',
                 city: data?.city || '',
@@ -85,49 +90,46 @@ const CmpAddEditInfoCustomersSuppliers : React.FC<ICmpAddEditInfoCustomersSuppli
     }, [type, data]);
 
     const getResourcesTypeAndResourcesFunction = () => {
-        const pb = new PocketBase('http://127.0.0.1:8090');
-        pb.collection('resources_type')
-            .getFullList({
-                fields: 'id, name',
-            })
+        axios
+            .get(import.meta.env.VITE_URL_WEB_API + '/api/resourceType/getAllResourceType')
             .then((response) => {
-                const resourcesTypeData = response.map((record) => ({
-                    value: record.id,
-                    label: record.name
+                const resourcesTypeData = response.data.map((res: IResourcesType) => ({
+                    id: res.id,
+                    name: res.name,
+                    description: res.description,
+                    note: res.note
                 }));
                 setSelectInputData((prevData) => ({
                     ...prevData,
-                    type: resourcesTypeData,
+                    type: resourcesTypeData
                 }));
             })
             .catch((error) => {
-                console.error('Errore durante la richiesta GET:', error);
+                console.error("Errore nel ricavare le i Tipi Risorsa: ", error);
             });
-        pb.collection('resources_function')
-            .getFullList({
-                fields: 'id, name',
-            })
+        axios
+            .get(import.meta.env.VITE_URL_WEB_API + '/api/resourceFunction/getAllResourceFunction')
             .then((response) => {
-                const resourcesFunctionData = response.map((record) => ({
-                    value: record.id,
-                    label: record.name
+                const resourcesFunctionData = response.data.map((res: IResourcesFunction) => ({
+                    id: res.id,
+                    name: res.name
                 }));
                 setSelectInputData((prevData) => ({
                     ...prevData,
-                    function: resourcesFunctionData,
+                    fnc: resourcesFunctionData
                 }));
             })
             .catch((error) => {
-                console.error('Errore durante la richiesta GET:', error);
+                console.error("Errore nel ricavare le le Funzioni Risorsa: ", error);
             });
     }
 
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
-        const pb = new PocketBase('http://127.0.0.1:8090');
-        const dataToSubmit = {
+
+        const toSubmit = {
             type: formData.type.id,
-            function: formData.function.id,
+            fnc: formData.fnc.id,
             name: formData.name,
             city: formData.city,
             address: formData.address,
@@ -138,39 +140,66 @@ const CmpAddEditInfoCustomersSuppliers : React.FC<ICmpAddEditInfoCustomersSuppli
             iban: formData.email,
         };
 
-        if (type === "add") {
-            try {
-                const record = await pb.collection('customers_suppliers').create(dataToSubmit);
-
-                if (record) {
-                    handleClearAndClose();
-                    onUpdate();
+        if (toSubmit.type === '') {
+            setError((prevData) => ({
+                ...prevData,
+                type: 'Il valore di questo campo non è valido'
+            }))
+        } else if (toSubmit.fnc === '') {
+            setError((prevData) => ({
+                ...prevData,
+                fnc: 'Il valore di questo campo non è valido'
+            }))
+        } else {
+            if (type === "add") {
+                axios
+                    .post(import.meta.env.VITE_URL_WEB_API + '/api/customerSupplier/createCustomerSupplier', toSubmit)
+                    .then((response)=>{
+                        if (response.status === 200) {
+                            handleClearAndClose();
+                            onUpdate();
+                        }
+                    })
+                    .catch((error) => {
+                        if (error.response.status === 409) {
+                            setError((prevData) => ({
+                                ...prevData,
+                                name: error.response.data
+                            }))
+                        }
+                    });
+            } else if (type === "update") {
+                if (data?.id) {
+                    axios
+                        .put(import.meta.env.VITE_URL_WEB_API + '/api/customerSupplier/updateCustomerSupplier/' + data.id, toSubmit)
+                        .then((response) => {
+                            if (response.status === 200) {
+                                handleClearAndClose();
+                                onUpdate();
+                            }
+                        })
+                        .catch((error) => {
+                            if (error.response.status === 409) {
+                                setError((prevData) => ({
+                                    ...prevData,
+                                    name: error.response.data
+                                }))
+                            }
+                        });
+                } else {
+                    console.log("ID non definito");
                 }
-            } catch (error) {
-                const errorObj: Error = error as Error;
-                console.log("error: ", errorObj)
-            }
-        } else if (type === "update") {
-            if (data?.id) {
-                try {
-                    const record = await pb.collection('customers_suppliers').update(data.id, dataToSubmit);
-
-                    if (record) {
-                        handleClearAndClose();
-                        onUpdate();
-                    }
-                } catch (error) {
-                    const errorObj: Error = error as Error;
-                    console.log("error: ", errorObj)
-                }
-            } else {
-                console.log("ID non definito");
             }
         }
     }
 
     const handleClearAndClose = () => {
         handleClose();
+        setError({
+            type: '',
+            fnc: '',
+            name: ''
+        })
         setFormData({
             id: '',
             type: {
@@ -179,7 +208,7 @@ const CmpAddEditInfoCustomersSuppliers : React.FC<ICmpAddEditInfoCustomersSuppli
                 description: '',
                 note: ''
             },
-            function: {
+            fnc: {
                 id: '',
                 name: '',
             },
@@ -191,7 +220,7 @@ const CmpAddEditInfoCustomersSuppliers : React.FC<ICmpAddEditInfoCustomersSuppli
             email: '',
             piva: '',
             iban: ''
-        })
+        });
     }
 
     return (
@@ -201,8 +230,9 @@ const CmpAddEditInfoCustomersSuppliers : React.FC<ICmpAddEditInfoCustomersSuppli
                     ec="mt-1.5"
                     title="Tipo Risorsa"
                     disabled={type === "info"}
-                    option={selectInputData.type}
+                    option={selectInputData.type.map((item: IResourcesType) => ({ id: item.id, name: item.name }))}
                     value={formData.type.id}
+                    error={error.type}
                     onChange={(e) => {
                         setFormData((prevData) => ({
                             ...prevData,
@@ -217,16 +247,18 @@ const CmpAddEditInfoCustomersSuppliers : React.FC<ICmpAddEditInfoCustomersSuppli
                     ec="mt-1.5"
                     title="Funzione Risorsa"
                     disabled={type === "info"}
-                    option={selectInputData.function}
-                    value={formData.function.id}
+                    option={selectInputData.fnc.map((item: IResourcesFunction) => ({ id: item.id, name: item.name }))}
+                    value={formData.fnc.id}
+                    error={error.fnc}
                     onChange={(e) => {
                         setFormData((prevData) => ({
                             ...prevData,
-                            function: {
-                                ...prevData.function,
+                            fnc: {
+                                ...prevData.fnc,
                                 id: e
                             }
                         }))
+                        console.log(formData.fnc)
                     }}
                 />
                 <CustomInput
@@ -237,6 +269,7 @@ const CmpAddEditInfoCustomersSuppliers : React.FC<ICmpAddEditInfoCustomersSuppli
                     type="text"
                     disabled={type === "info"}
                     value={formData.name}
+                    error={error.name}
                     onChange={(e) => {
                         setFormData((prevData) => ({
                             ...prevData,

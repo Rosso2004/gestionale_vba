@@ -1,8 +1,8 @@
 import {ChangeEvent} from "react";
 
 interface Option {
-    value: string;
-    label: string;
+    id: string;
+    name: string;
 }
 
 interface ICustomSelect {
@@ -40,13 +40,14 @@ const CustomSelect: React.FC<ICustomSelect> = (props) => {
                     value={value}
                     onChange={handleSelectChange}
                     disabled={disabled}
+                    required
                 >
                     {value === '' && (<option key={undefined} value={undefined}>
                         Seleziona un opzione...
                     </option>)}
                     {option.map((dt) => (
-                        <option key={dt.value} value={dt.value}>
-                            {dt.label}
+                        <option key={dt.id} value={dt.id}>
+                            {dt.name}
                         </option>
                     ))}
                 </select>

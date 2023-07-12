@@ -21,8 +21,8 @@ const PageLogin = () => {
     const { setIsVerified } = useGlobalState();
 
     const [formData, setFormData] = useState<IFormData>({
-        emailUsername: 'simone.rosso004@gmail.com',
-        password: 'Simone04',
+        emailUsername: 'simone@gmail.com',
+        password: 'simone',
         error: {
             emailUsername: '',
             password: ''
@@ -37,9 +37,9 @@ const PageLogin = () => {
             username: formData.emailUsername,
             password: formData.password
         }
-
+        console.log("cc", import.meta.env.VITE_URL_WEB_API)
         axios
-            .post('http://localhost:5000/api/user/verifyUser', toSubmit)
+            .post(import.meta.env.VITE_URL_WEB_API + '/api/user/verifyUser', toSubmit)
             .then((response)=>{
                 if (response.status === 200) {
                     setIsVerified(true)
@@ -47,7 +47,6 @@ const PageLogin = () => {
                 }
             })
             .catch((error) => {
-                console.log(error.er)
                 if (error.response.status === 404) {
                     setFormData((prevData) => ({
                         ...prevData,
@@ -69,9 +68,10 @@ const PageLogin = () => {
     };
 
     return (
-        <>
+        <div className="flex flex-col items-center justify-center h-screen">
+            <img src="../../public/vba.svg" className="h-44 mb-10" alt="Logo" />
 
-            <form onSubmit={handleSubmit} className="flex flex-col items-center justify-center h-screen">
+            <form onSubmit={handleSubmit} className="flex flex-col items-center">
                 <h1 className="text-4xl mb-10">Login</h1>
                 <div className="flex flex-col items-center">
                 <CustomInput
@@ -111,7 +111,7 @@ const PageLogin = () => {
                 />
                 </div>
             </form>
-        </>
+        </div>
     )
 }
 

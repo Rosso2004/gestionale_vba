@@ -15,10 +15,11 @@ interface ICustomInput {
     size?: "xs";
     onChange?: (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
     value?: string;
+    required?: boolean;
 }
 
 const CustomInput: React.FC<ICustomInput> = (props) => {
-    const {ec, id, type, title, textArea, placeholder, StartIcon, EndIcon, size, disabled, error, onChange, value} = props;
+    const {ec, id, type, title, textArea, placeholder, StartIcon, EndIcon, size, disabled, error, onChange, value, required} = props;
     const [passwordShow, setPasswordShow] = useState(false);
 
     const togglePassword = () => {
@@ -57,6 +58,7 @@ const CustomInput: React.FC<ICustomInput> = (props) => {
                     onChange={onChange}
                     value={value}
                     disabled={disabled}
+                    required={required}
                     className={`border text-sm rounded-lg block w-full
                     ${
                         disabled ? 'text-gray-400 bg-gray-50 border border-gray-200 focus:ring-gray-500 focus:border-gray-500' : 'text-gray-900 bg-gray-50 border border-gray-300 focus:ring-gray-500 focus:border-gray-500'
@@ -79,6 +81,7 @@ const CustomInput: React.FC<ICustomInput> = (props) => {
                     onChange={onChange}
                     value={value}
                     disabled={disabled}
+                    required={required}
                     className={`border text-gray-900 text-sm rounded-lg block w-full p-2.5
                     ${
                         error ? 'border-red-500 placeholder-red-700 focus:ring-red-500 focus:border-red-500' : 'bg-gray-50 border border-gray-300 focus:ring-gray-500 focus:border-gray-500'

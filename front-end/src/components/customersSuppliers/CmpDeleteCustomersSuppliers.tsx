@@ -1,6 +1,6 @@
 import CustomAlertDialog from "../CustomAlertDialog";
-import PocketBase from 'pocketbase';
 import {ICustomersSuppliers} from "../../interfaces/ICustomersSuppliers";
+import axios from "axios";
 
 type ICmpDeleteResourceType = {
     show: boolean;
@@ -11,22 +11,25 @@ type ICmpDeleteResourceType = {
 const CmpDeleteCustomersSuppliers: React.FC<ICmpDeleteResourceType> = (props) => {
     const {show, data, handleCancel, onUpdate} = props;
     const handleDelete = async () => {
-        const pb = new PocketBase('http://127.0.0.1:8090');
-        try {
-            const res = await pb.collection('customers_suppliers').delete(data.id);
-            if (res){
-                onUpdate();
-                handleCancel();
-            }
-        } catch (error) {
-            const errorObj: Error = error as Error;
-            console.log("error: ", errorObj)
-        }
+        axios
+            .delete(import.meta.env.VITE_URL_WEB_API + '/api/customerSupplier/deleteCustomerSupplier/' + data.id)
+            .then((response) => {
+                if (response.status === 200) {
+                    onUpdate();
+                    handleCancel();
+                    console.log(response.data.message)
+                }
+            })
+            .catch((error) => {
+                if (error.response.status === 404) {
+                    console.log(error.response.data)
+                }
+            });
     }
     return (
         <>
             <CustomAlertDialog
-                text={"Sei sicuro di voler rimuovere il " + data.function.name + " " + data.name + "? Quest'azione sarà irreveribile!"}
+                text={"Sei sicuro di voler rimuovere il " + data.fnc.name + " " + data.name + "? Quest'azione sarà irreveribile!"}
                 show={show}
                 confirmBtn="Si, sono sicuro"
                 cancelBtn="No, annulla"

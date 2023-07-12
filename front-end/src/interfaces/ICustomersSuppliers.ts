@@ -4,7 +4,7 @@ import {IResourcesFunction} from "./IResourcesFunction";
 export interface ICustomersSuppliers {
     id: string;
     type: IResourcesType;
-    function: IResourcesFunction;
+    fnc: IResourcesFunction;
     name: string;
     city: string;
     address: string;

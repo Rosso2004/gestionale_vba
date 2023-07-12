@@ -18,11 +18,15 @@ router.post('/createUser', async (req, res) => {
     }
 });
 
-// router.put('/updateAdmin/:id', async (req, res) => {
-//     const { lastname, firstname, email, password } = req.body;
-//     const admin = await User.updateUser(req.params.id, lastname, firstname, email, password);
-//     res.json(admin);
-// });
+router.put('/updateUser/:id', async (req, res) => {
+    const { username, lastname, firstname, email, phone_number, password } = req.body;
+    const updUser = await User.updateUser(req.params.id, username, lastname, firstname, email, phone_number, password);
+    if (updUser.status === 200) {
+        res.json(updUser);
+    } else {
+        res.status(updUser.status).json(updUser.message);
+    }
+});
 
 router.post('/verifyUser', async (req, res) => {
     const { email, username, password } = req.body;

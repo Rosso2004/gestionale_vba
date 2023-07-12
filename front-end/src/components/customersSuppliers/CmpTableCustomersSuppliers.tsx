@@ -24,7 +24,7 @@ const CmpTableCustomersSuppliers: React.FC<ICmpTableCustomersSuppliers> = (props
                 description: '',
                 note: ''
             },
-            function: {
+            fnc: {
                 id: '',
                 name: '',
             },
@@ -86,7 +86,7 @@ const CmpTableCustomersSuppliers: React.FC<ICmpTableCustomersSuppliers> = (props
                     description: '',
                     note: ''
                 },
-                function: {
+                fnc: {
                     id: '',
                     name: '',
                 },
@@ -128,7 +128,7 @@ const CmpTableCustomersSuppliers: React.FC<ICmpTableCustomersSuppliers> = (props
             },
             {
                 Header: 'Funzione Risorsa',
-                accessor: 'function.name',
+                accessor: 'fnc.name',
             },
             {
                 Header: 'Azioni',

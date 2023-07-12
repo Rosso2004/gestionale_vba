@@ -2,12 +2,12 @@ import {useNavigate} from "react-router-dom";
 import {useGlobalState} from "../global/GlobalStateContext";
 import {useEffect, useState} from "react";
 import {ICustomersSuppliers} from "../interfaces/ICustomersSuppliers";
-import PocketBase from "pocketbase";
 import CustomPaper from "../components/CutomPaper";
 import CustomButton from "../components/CustomButton";
 import {MdAdd} from "react-icons/md";
 import CmpTableCustomersSuppliers from "../components/customersSuppliers/CmpTableCustomersSuppliers";
 import CmpAddEditInfoCustomersSuppliers from "../components/customersSuppliers/CmpAddEditInfoCustomersSuppliers";
+import axios from "axios";
 
 const PageCustomersSuppliers = () => {
     const navigate = useNavigate();
@@ -26,37 +26,13 @@ const PageCustomersSuppliers = () => {
     }, []);
 
     const fetchCustomersSuppliers = () => {
-        const pb = new PocketBase('http://127.0.0.1:8090');
-        pb.collection('customers_suppliers')
-            .getFullList({
-                expand: 'type, function'
-            })
+        axios
+            .get(import.meta.env.VITE_URL_WEB_API + '/api/customerSupplier/getAllCustomerSupplier')
             .then((response) => {
-                const updatedData: ICustomersSuppliers[] = response.map((record) => ({
-                    id: record.id,
-                    type: {
-                        id: record.expand.type.id,
-                        name: record.expand.type.name,
-                        description: record.expand.type.description,
-                        note: record.expand.type.note
-                    },
-                    function: {
-                        id: record.expand.function.id,
-                        name: record.expand.function.name
-                    },
-                    name: record.name,
-                    city: record.city,
-                    address: record.address,
-                    cap: record.cap,
-                    phone_number: record.phone_number,
-                    email: record.email,
-                    piva: record.piva,
-                    iban: record.iban,
-                }));
-                setCustomersSuppliersData(updatedData);
+                setCustomersSuppliersData(response.data);
             })
             .catch((error) => {
-                console.error('Errore durante la richiesta GET:', error);
+                console.error("Errore nel ricavare le le Risorse: ", error);
             });
     };
 

@@ -5,7 +5,6 @@ import {useEffect, useState} from "react";
 import {MdAdd, MdCancel, MdModeEdit, MdTextFields} from "react-icons/md";
 import {IResourcesType} from "../../interfaces/IResourcesType";
 import axios from "axios";
-import CustomAlert from "../CustomAlert";
 
 interface ICmpAddResourceType {
     show: boolean;
@@ -23,6 +22,12 @@ const CmpAddEditResourceType : React.FC<ICmpAddResourceType> = (props) => {
         note: ''
     })
 
+    // const [alertData, setAlertData] = useState<IAlert>({
+    //     open: false,
+    //     type: 'success',
+    //     text: ''
+    // })
+
     const [nameError, setNameError] = useState<string>('')
 
     useEffect(() => {
@@ -38,11 +43,17 @@ const CmpAddEditResourceType : React.FC<ICmpAddResourceType> = (props) => {
 
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
+
         if (type === "add") {
             axios
-                .post("http://localhost:5000/api/resourceType/createResourceType", formData)
+                .post(import.meta.env.VITE_URL_WEB_API + '/api/resourceType/createResourceType', formData)
                 .then((response) => {
                     if (response.status === 200) {
+                        // setAlertData({
+                        //     open: true,
+                        //     type: 'success',
+                        //     text: response.data.message
+                        // });
                         handleClearAndClose();
                         onUpdate();
                     }
@@ -55,7 +66,7 @@ const CmpAddEditResourceType : React.FC<ICmpAddResourceType> = (props) => {
         } else if (type === "update") {
             if (data?.id) {
                 axios
-                    .put("http://localhost:5000/api/resourceType/updateResourceType/" + data.id, formData)
+                    .put(import.meta.env.VITE_URL_WEB_API + '/api/resourceType/updateResourceType/' + data.id, formData)
                     .then((response) => {
                         if (response.status === 200) {
                             handleClearAndClose();
@@ -85,69 +96,82 @@ const CmpAddEditResourceType : React.FC<ICmpAddResourceType> = (props) => {
     }
 
     return (
-        <CustomModal title={type === "add" ? "Inserimento Tipo Risorsa" : "Modifica Tipo Risorsa"} show={show} handleClose={handleClearAndClose}>
-            <form className="" onSubmit={handleSubmit}>
-                <CustomInput
-                    ec="mt-1.5"
-                    StartIcon={<MdTextFields/>}
-                    title="Nome"
-                    type="text"
-                    placeholder="Nome"
-                    error={nameError}
-                    value={formData.name}
-                    onChange={(e) => {
-                        setFormData((prevData) => ({
-                            ...prevData,
-                            name: e.target.value
-                        }));
-                    }}
-                />
-                <CustomInput
-                    ec="mt-1.5"
-                    title="Descrizione"
-                    type="text"
-                    placeholder="Descrizione"
-                    textArea
-                    value={formData.description}
-                    onChange={(e) => {
-                        setFormData((prevData) => ({
-                            ...prevData,
-                            description: e.target.value
-                        }));
-                    }}
-                />
-                <CustomInput
-                    ec="mt-1.5"
-                    title="Note"
-                    placeholder="Note"
-                    textArea
-                    value={formData.note}
-                    onChange={(e) => {
-                        setFormData((prevData) => ({
-                            ...prevData,
-                            note: e.target.value
-                        }));
-                    }}
-                />
+        <>
+            <CustomModal title={type === "add" ? "Inserimento Tipo Risorsa" : "Modifica Tipo Risorsa"} show={show} handleClose={handleClearAndClose}>
+                <form className="" onSubmit={handleSubmit}>
+                    <CustomInput
+                        ec="mt-1.5"
+                        StartIcon={<MdTextFields/>}
+                        title="Nome"
+                        type="text"
+                        placeholder="Nome"
+                        error={nameError}
+                        value={formData.name}
+                        onChange={(e) => {
+                            setFormData((prevData) => ({
+                                ...prevData,
+                                name: e.target.value
+                            }));
+                        }}
+                    />
+                    <CustomInput
+                        ec="mt-1.5"
+                        title="Descrizione"
+                        type="text"
+                        placeholder="Descrizione"
+                        textArea
+                        value={formData.description}
+                        onChange={(e) => {
+                            setFormData((prevData) => ({
+                                ...prevData,
+                                description: e.target.value
+                            }));
+                        }}
+                    />
+                    <CustomInput
+                        ec="mt-1.5"
+                        title="Note"
+                        placeholder="Note"
+                        textArea
+                        value={formData.note}
+                        onChange={(e) => {
+                            setFormData((prevData) => ({
+                                ...prevData,
+                                note: e.target.value
+                            }));
+                        }}
+                    />
 
-                <div className="mt-5 flex justify-end gap-2">
-                    <CustomButton
-                        type="submit"
-                        text={type === "add" ? "Aggiungi" : "Modifica"}
-                        icon={type === "add" ? <MdAdd/> : <MdModeEdit/>}
-                        color={type === "add" ? "green": undefined}
-                    />
-                    <CustomButton
-                        type="button"
-                        text="Annulla"
-                        icon={<MdCancel/>}
-                        color="red"
-                        onClick={handleClearAndClose}
-                    />
-                </div>
-            </form>
-            <CustomAlert/>
-        </CustomModal>
+                    <div className="mt-5 flex justify-end gap-2">
+                        <CustomButton
+                            type="submit"
+                            text={type === "add" ? "Aggiungi" : "Modifica"}
+                            icon={type === "add" ? <MdAdd/> : <MdModeEdit/>}
+                            color={type === "add" ? "green": undefined}
+                        />
+                        <CustomButton
+                            type="button"
+                            text="Annulla"
+                            icon={<MdCancel/>}
+                            color="red"
+                            onClick={handleClearAndClose}
+                        />
+                    </div>
+                </form>
+            </CustomModal>
+
+            {/*<CustomAlert*/}
+            {/*    open={alertData.open}*/}
+            {/*    type={alertData.type}*/}
+            {/*    text={alertData.text}*/}
+            {/*    onClose={() => {*/}
+            {/*        setAlertData((prevData) => ({*/}
+            {/*            ...prevData,*/}
+            {/*            open: false*/}
+            {/*        }));*/}
+            {/*    }*/}
+            {/*}/>*/}
+        </>
     );
 };
 export default CmpAddEditResourceType;

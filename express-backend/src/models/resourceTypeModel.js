@@ -27,13 +27,18 @@ class ResourceType {
     }
 
     static async deleteResourceType(id) {
-        const [checkResults] = await db.query('SELECT id FROM resources_type WHERE id = ?', [id]);
+        const [checkPresence] = await db.query('SELECT id FROM customers_suppliers WHERE type = ?', [id]);
 
-        if (checkResults.length === 0) {
-            return { status: 404, message: 'Tipo risorsa non trovata' };
-        } else if (checkResults.length === 1) {
-            await db.query('DELETE FROM resources_type WHERE id = ?', [id]);
-            return { status: 200, message: 'Tipo risorsa rimossa con successo' };
+        if (checkPresence.length > 0) {
+            return { status: 409, message: 'Impossibile eliminare questo tipo risorsa poichè è utilizzata in una risorsa' };
+        } else if (checkPresence.length === 0) {
+            const [checkResults] = await db.query('SELECT id FROM resources_type WHERE id = ?', [id]);
+            if (checkResults.length === 0) {
+                return { status: 404, message: 'Tipo risorsa non trovata' };
+            } else if (checkResults.length === 1) {
+                await db.query('DELETE FROM resources_type WHERE id = ?', [id]);
+                return { status: 200, message: 'Tipo risorsa rimossa con successo' };
+            }
         }
     }
 }

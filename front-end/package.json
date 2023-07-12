@@ -22,7 +22,8 @@
     "react-icons": "^4.9.0",
     "react-router": "^6.13.0",
     "react-router-dom": "^6.13.0",
-    "react-table": "^7.8.0"
+    "react-table": "^7.8.0",
+    "timers-promises": "^1.0.1"
   },
   "devDependencies": {
     "@types/node": "^20.4.1",

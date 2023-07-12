@@ -1,6 +1,6 @@
 import CustomAlertDialog from "../CustomAlertDialog";
 import {IResourcesType} from "../../interfaces/IResourcesType";
-import PocketBase from 'pocketbase';
+import axios from "axios";
 
 type ICmpDeleteResourceType = {
   show: boolean;
@@ -11,17 +11,23 @@ type ICmpDeleteResourceType = {
 const CmpDeleteResourceType: React.FC<ICmpDeleteResourceType> = (props) => {
   const {show, data, handleCancel, onUpdate} = props;
   const handleDelete = async () => {
-    const pb = new PocketBase('http://127.0.0.1:8090');
-    try {
-      const res = await pb.collection('resources_type').delete(data.id);
-      if (res){
-        onUpdate();
-        handleCancel();
-      }
-    } catch (error) {
-      const errorObj: Error = error as Error;
-      console.log("error: ", errorObj)
-    }
+      axios
+          .delete(import.meta.env.VITE_URL_WEB_API + '/api/resourceType/deleteResourceType/' + data.id)
+          .then((response) => {
+              if (response.status === 200) {
+                  onUpdate();
+                  handleCancel();
+                  console.log(response.data.message)
+              }
+          })
+          .catch((error) => {
+              if (error.response.status === 404) {
+                  console.log(error.response.data)
+              }
+              if (error.response.status === 409) {
+                  console.log(error.response.data)
+              }
+          });
   }
   return (
     <>
