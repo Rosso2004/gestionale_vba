@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="e30ba00e-8741-4ef8-b0f1-85a53208bbc6" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/../back-end/.idea/back-end.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../back-end/.idea/modules.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../back-end/.idea/workspace.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/controllers/customerSupplierController.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/controllers/resourceFunctionController.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/models/customerSupplierModel.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/models/resourceFunctionModel.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/routes/customerSupplierRoutes.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/routes/resourceFunctionRoutes.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../front-end/.env" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../front-end/public/vba.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../front-end/src/components/users/CmpAddEditUser.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../front-end/src/components/users/CmpDeleteUser.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../front-end/src/components/users/CmpTableUsers.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../front-end/src/interfaces/IAlert.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../front-end/src/interfaces/IUsers.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../front-end/src/pages/PageUsers.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../back-end/pb_data/logs.db" beforeDir="false" afterPath="$PROJECT_DIR$/../back-end/pb_data/logs.db" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/app.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/controllers/userController.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/controllers/userController.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/models/resourceTypeModel.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/resourceTypeModel.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/models/userModel.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/userModel.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../front-end/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/../front-end/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../front-end/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/../front-end/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../front-end/pnpm-lock.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/../front-end/pnpm-lock.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../front-end/src/App.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../front-end/src/App.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../front-end/src/components/CustomAlert.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../front-end/src/components/CustomAlert.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../front-end/src/components/CustomInput.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../front-end/src/components/CustomInput.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../front-end/src/components/CustomSelect.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../front-end/src/components/CustomSelect.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../front-end/src/components/customersSuppliers/CmpAddEditInfoCustomersSuppliers.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../front-end/src/components/customersSuppliers/CmpAddEditInfoCustomersSuppliers.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../front-end/src/components/customersSuppliers/CmpDeleteCustomersSuppliers.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../front-end/src/components/customersSuppliers/CmpDeleteCustomersSuppliers.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../front-end/src/components/customersSuppliers/CmpTableCustomersSuppliers.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../front-end/src/components/customersSuppliers/CmpTableCustomersSuppliers.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../front-end/src/components/layout/CmpHeader.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../front-end/src/components/layout/CmpHeader.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../front-end/src/components/layout/CmpSidebar.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../front-end/src/components/layout/CmpSidebar.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../front-end/src/components/resourcesType/CmpAddEditResourceType.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../front-end/src/components/resourcesType/CmpAddEditResourceType.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../front-end/src/components/resourcesType/CmpDeleteResourceType.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../front-end/src/components/resourcesType/CmpDeleteResourceType.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../front-end/src/components/table/CustomTable.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../front-end/src/components/table/CustomTable.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../front-end/src/interfaces/ICustomersSuppliers.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../front-end/src/interfaces/ICustomersSuppliers.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../front-end/src/pages/PageCustomersSuppliers.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../front-end/src/pages/PageCustomersSuppliers.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../front-end/src/pages/PageResourcesType.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../front-end/src/pages/PageResourcesType.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../front-end/src/pages/login/PageLogin.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../front-end/src/pages/login/PageLogin.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../front-end/src/vite-env.d.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../front-end/src/vite-env.d.ts" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="JavaScript File" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProjectId" id="2SQ36jAGvvBTC4a3KJMMtqpeKzv" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  }
+}</component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="e30ba00e-8741-4ef8-b0f1-85a53208bbc6" name="Changes" comment="" />
+      <created>1689064805331</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1689064805331</updated>
+      <workItem from="1689064806497" duration="3451000" />
+      <workItem from="1689076680185" duration="7804000" />
+      <workItem from="1689147573418" duration="20559000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+</project>
