@@ -4,52 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e30ba00e-8741-4ef8-b0f1-85a53208bbc6" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/controllers/orderController.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/controllers/orderStatusController.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/controllers/orderTypesController.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/models/orderModel.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/models/orderStatusModel.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/models/orderTypesModel.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/routes/orderRoutes.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/routes/orderStatusRoutes.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/routes/orderTypesRoutes.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../front-end/src/components/orders/CmpAddEditInfoOrder.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../front-end/src/components/orders/CmpTableOrders.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../front-end/src/interfaces/IOrders.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../front-end/src/interfaces/IOrdersStatus.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../front-end/src/interfaces/IOrdersTypes.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pnpm-lock.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/pnpm-lock.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/app.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/controllers/userController.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/controllers/userController.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/database/schema.sql" beforeDir="false" afterPath="$PROJECT_DIR$/src/database/schema.sql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/models/userModel.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/userModel.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/routes/customerSupplierRoutes.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/customerSupplierRoutes.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../front-end/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/../front-end/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../front-end/pnpm-lock.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/../front-end/pnpm-lock.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../front-end/src/App.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../front-end/src/App.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../front-end/src/components/CustomAlertDialog.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../front-end/src/components/CustomAlertDialog.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../front-end/src/components/CustomInput.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../front-end/src/components/CustomInput.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../front-end/src/components/CustomModal.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../front-end/src/components/CustomModal.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../front-end/src/components/CustomSelect.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../front-end/src/components/CustomSelect.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../front-end/src/components/customersSuppliers/CmpAddEditInfoCustomersSuppliers.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../front-end/src/components/customersSuppliers/CmpAddEditInfoCustomersSuppliers.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../front-end/src/components/customersSuppliers/CmpTableCustomersSuppliers.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../front-end/src/components/customersSuppliers/CmpTableCustomersSuppliers.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../front-end/src/components/resourcesType/CmpAddEditResourceType.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../front-end/src/components/resourcesType/CmpAddEditResourceType.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../front-end/src/components/resourcesType/CmpTableResourcesType.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../front-end/src/components/resourcesType/CmpTableResourcesType.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../front-end/src/components/table/CustomTable.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../front-end/src/components/table/CustomTable.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../front-end/src/components/users/CmpAddEditUser.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../front-end/src/components/users/CmpAddEditUser.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../front-end/src/components/users/CmpDeleteUser.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../front-end/src/components/users/CmpDeleteUser.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../front-end/src/components/users/CmpTableUsers.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../front-end/src/components/users/CmpTableUsers.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../front-end/src/pages/PageCustomersSuppliers.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../front-end/src/pages/PageCustomersSuppliers.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../front-end/src/pages/PageDashboard.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../front-end/src/pages/PageDashboard.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../front-end/src/pages/PageOrdersManagement.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../front-end/src/pages/PageOrdersManagement.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../front-end/src/pages/PageResourcesType.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../front-end/src/pages/PageResourcesType.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../front-end/src/pages/PageUsers.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../front-end/src/pages/PageUsers.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../front-end/src/pages/login/PageLogin.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../front-end/src/pages/login/PageLogin.tsx" afterDir="false" />
-    </list>
+    <list default="true" id="e30ba00e-8741-4ef8-b0f1-85a53208bbc6" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -99,7 +54,7 @@
       <workItem from="1689064806497" duration="3451000" />
       <workItem from="1689076680185" duration="7804000" />
       <workItem from="1689147573418" duration="20559000" />
-      <workItem from="1689232943802" duration="12180000" />
+      <workItem from="1689232943802" duration="12496000" />
     </task>
     <servers />
   </component>
