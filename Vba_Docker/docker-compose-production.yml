@@ -2,7 +2,7 @@ version: '3.9'
 
 services:
 
-  app:
+  app_vba:
     container_name: fe-vba
     restart: unless-stopped
     image: vbagestfe
@@ -15,13 +15,13 @@ services:
     labels:
       - "traefik.enable=true"
       - "traefik.docker.network=proxy"
-      - "traefik.http.routers.app.rule=Host(`app.vbup.it`)"
-      - "traefik.http.routers.app.entrypoints=websecure"
-      - "traefik.http.routers.app.tls.certresolver=myresolver"
+      - "traefik.http.routers.app_vba.rule=Host(`app.vbup.it`)"
+      - "traefik.http.routers.app_vba.entrypoints=websecure"
+      - "traefik.http.routers.app_vba.tls.certresolver=myresolver"
     volumes:
       - ./config.js:/usr/share/nginx/html/config.js
 
-  db:
+  db_vba:
     image: amd64/mysql
     restart: always
     networks:
@@ -45,7 +45,7 @@ services:
       - my-db-vba:/var/lib/mysql
 
 
-  api:
+  api_vba:
     container_name: be-vba
     image: vbagestbe
     restart: always
@@ -63,9 +63,9 @@ services:
     labels:
         - "traefik.enable=true"
         - "traefik.docker.network=proxy"
-        - "traefik.http.routers.api.rule=Host(`app.vbup.it`) && PathPrefix(`/api`)"
-        - "traefik.http.routers.api.entrypoints=websecure"
-        - "traefik.http.routers.api.tls.certresolver=myresolver"
+        - "traefik.http.routers.api_vba.rule=Host(`app.vbup.it`) && PathPrefix(`/api`)"
+        - "traefik.http.routers.api_vba.entrypoints=websecure"
+        - "traefik.http.routers.api_vba.tls.certresolver=myresolver"
 
 # Names our volume
 volumes:
