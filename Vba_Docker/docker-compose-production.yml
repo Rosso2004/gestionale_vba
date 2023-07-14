@@ -54,7 +54,7 @@ services:
     ports:
       - "5055:5000"
     environment:
-      DB_HOST: 'db'
+      DB_HOST: 'db_vba'
       DB_USER: 'root'
       DB_PASSWORD: 'MyMysqlP455w0rd!'
       DB_NAME: 'gestionale_vba'
