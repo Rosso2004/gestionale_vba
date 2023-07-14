@@ -28,6 +28,12 @@ class Order {
         });
     }
 
+    static async getAllOrderNew() {
+
+        return {pippo: "ciao"}
+    }
+
+
     static async createOrder(manager, customer, name, status, type, start_date, end_date, note) {
         await db.query('INSERT INTO orders (manager, customer, name, status, type, start_date, end_date, note) VALUES (?, ?, ?, ?, ?, ?, ?, ?)', [manager, customer, name, status, type, start_date, end_date, note]);
         return { status: 200, message: 'La commessa ' + name + ' è stata aggiunta con successo' };
