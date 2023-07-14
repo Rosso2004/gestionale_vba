@@ -206,7 +206,6 @@ const CmpTableCustomersSuppliers: React.FC<ICmpTableCustomersSuppliers> = (props
                 accessor: 'status.name',
                 width: 100,
                 Cell: ({ value }: any) => {
-                    console.log(value)
                     return (
                         <div className="flex justify-between items-center">
                             <span>{value}</span>

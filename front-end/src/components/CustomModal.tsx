@@ -16,7 +16,7 @@ const CustomModal: React.FC<ICustomModal> = (props) => {
                 !show ? 'hidden' : ''
              }`}>
             <div className="relative w-full max-w-xl max-h-full">
-                <div className="relative bg-white rounded-lg shadow">
+                <div className="relative bg-white rounded-lg shadow-md">
                     <div className="flex justify-between p-2">
                         <h3 className="text-xl ml-1.5 mt-1.5 font-medium text-gray-900">{title}</h3>
                         <CustomButton type="button" ec="mr-1.5 mt-1.5" onClick={handleClose} icon={<MdClose/>} color="gray"/>

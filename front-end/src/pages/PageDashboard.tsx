@@ -16,7 +16,7 @@ const PageDashboard = () => {
     return (
         <div className={`w-full mx-4 grid gap-4`}>
             <CustomPaper>
-                <p>Work in progress...</p>
+                <img src="https://imgur.com/m0oPrUz.png" className="mx-auto my-12"></img>
             </CustomPaper>
         </div>
     )
