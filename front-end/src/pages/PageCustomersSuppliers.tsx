@@ -43,7 +43,7 @@ const PageCustomersSuppliers = () => {
     };
 
     return (
-        <div className={`w-full mx-40 grid gap-4`}>
+        <div className={`w-full mx-4 grid gap-4`}>
             <CustomPaper ec="m-3 flex justify-end gap-2">
                 <CustomButton type="button" text="Nuovo Cliente / Fornitore" icon={<MdAdd/>} onClick={handleShowAddResourceType}></CustomButton>
             </CustomPaper>

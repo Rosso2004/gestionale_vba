@@ -28,6 +28,16 @@ router.put('/updateUser/:id', async (req, res) => {
     }
 });
 
+router.put('/changeUserPassword/:id', async (req, res) => {
+    const { password } = req.body;
+    const chPwdUser = await User.changeUserPassword(req.params.id, password);
+    if (chPwdUser.status === 200) {
+        res.json(chPwdUser);
+    } else {
+        res.status(chPwdUser.status).json(chPwdUser.message);
+    }
+});
+
 router.post('/verifyUser', async (req, res) => {
     const { email, username, password } = req.body;
     const verUser = await User.verifyUser(email, username, password);

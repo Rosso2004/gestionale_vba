@@ -10,6 +10,7 @@ import PageCustomersSuppliers from "./pages/PageCustomersSuppliers";
 import PageUsers from "./pages/PageUsers";
 import {ToastContainer} from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import CustomPaper from "./components/CutomPaper";
 
 const App = () => {
     const {titlePage} = useGlobalState()
@@ -21,7 +22,13 @@ const App = () => {
                 <Route path='/dashboard' element={<PageDashboard/>}/>
                 <Route path='/users' element={<PageUsers/>}/>
                 <Route path='/orders_management' element={<PageOrdersManagement/>}/>
-                <Route path='/activities_type' element={<p>ss</p>}/>
+                <Route path='/activities_type' element={
+                    <div className={`w-full mx-4 grid gap-4`}>
+                        <CustomPaper>
+                            <p>Work in progress...</p>
+                        </CustomPaper>
+                    </div>
+                }/>
                 <Route path='/resources_type' element={<PageResourcesType/>}/>
                 <Route path='/customers_suppliers' element={<PageCustomersSuppliers/>}/>
             </Routes>

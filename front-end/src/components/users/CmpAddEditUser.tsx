@@ -129,112 +129,112 @@ const CmpAddEditUser : React.FC<ICmpAddEditUser> = (props) => {
     return (
         <CustomModal title={type === "add" ? "Inserimento Utente" : "Modifica Utente"} show={show} handleClose={handleClearAndClose}>
             <form className="" onSubmit={handleSubmit}>
-                <CustomInput
-                    ec="mt-1.5"
-                    StartIcon={<MdPerson/>}
-                    title="Username"
-                    type="text"
-                    placeholder="Username"
-                    required
-                    value={formData.username}
-                    error={error.userEmail}
-                    onChange={(e) => {
-                        setFormData((prevData) => ({
-                            ...prevData,
-                            username: e.target.value
-                        }));
-                    }}
-                />
-                <CustomInput
-                    ec="mt-1.5"
-                    StartIcon={<MdTextFields/>}
-                    title="Cognome"
-                    type="text"
-                    placeholder="Cognome"
-                    required
-                    value={formData.lastname}
-                    onChange={(e) => {
-                        setFormData((prevData) => ({
-                            ...prevData,
-                            lastname: e.target.value
-                        }));
-                    }}
-                />
-                <CustomInput
-                    ec="mt-1.5"
-                    StartIcon={<MdTextFields/>}
-                    title="Nome"
-                    type="text"
-                    placeholder="Nome"
-                    required
-                    value={formData.firstname}
-                    onChange={(e) => {
-                        setFormData((prevData) => ({
-                            ...prevData,
-                            firstname: e.target.value
-                        }));
-                    }}
-                />
-                <CustomInput
-                    ec="mt-1.5"
-                    StartIcon={<MdEmail/>}
-                    title="Email"
-                    type="email"
-                    placeholder="Email"
-                    required
-                    value={formData.email}
-                    error={error.userEmail}
-                    onChange={(e) => {
-                        setFormData((prevData) => ({
-                            ...prevData,
-                            email: e.target.value
-                        }));
-                    }}
-                />
-                <CustomInput
-                    ec="mt-1.5"
-                    StartIcon={<MdPhone/>}
-                    title="Numero di telefono"
-                    type="text"
-                    placeholder="Numero di telefono"
-                    value={formData.phone_number}
-                    onChange={(e) => {
-                        setFormData((prevData) => ({
-                            ...prevData,
-                            phone_number: e.target.value
-                        }));
-                    }}
-                />
-                <CustomInput
-                    ec="mt-1.5"
-                    StartIcon={<MdLock/>}
-                    title="Password"
-                    type="password"
-                    placeholder="Password"
-                    error={error.password}
-                    required
-                    value={formData.password}
-                    onChange={(e) => {
-                        setFormData((prevData) => ({
-                            ...prevData,
-                            password: e.target.value
-                        }));
-                    }}
-                />
+                <div className="grid grid-cols-2 gap-2">
+                    <CustomInput
+                        StartIcon={<MdPerson/>}
+                        title="Username"
+                        type="text"
+                        placeholder="Username"
+                        required
+                        value={formData.username}
+                        error={error.userEmail}
+                        onChange={(e) => {
+                            setFormData((prevData) => ({
+                                ...prevData,
+                                username: e.target.value
+                            }));
+                        }}
+                    />
+                    <CustomInput
+                        StartIcon={<MdTextFields/>}
+                        title="Cognome"
+                        type="text"
+                        placeholder="Cognome"
+                        required
+                        value={formData.lastname}
+                        onChange={(e) => {
+                            setFormData((prevData) => ({
+                                ...prevData,
+                                lastname: e.target.value
+                            }));
+                        }}
+                    />
+                    <CustomInput
+                        ec="mt-1.5"
+                        StartIcon={<MdTextFields/>}
+                        title="Nome"
+                        type="text"
+                        placeholder="Nome"
+                        required
+                        value={formData.firstname}
+                        onChange={(e) => {
+                            setFormData((prevData) => ({
+                                ...prevData,
+                                firstname: e.target.value
+                            }));
+                        }}
+                    />
+                    <CustomInput
+                        ec="mt-1.5"
+                        StartIcon={<MdEmail/>}
+                        title="Email"
+                        type="email"
+                        placeholder="Email"
+                        required
+                        value={formData.email}
+                        error={error.userEmail}
+                        onChange={(e) => {
+                            setFormData((prevData) => ({
+                                ...prevData,
+                                email: e.target.value
+                            }));
+                        }}
+                    />
+                    <CustomInput
+                        ec="mt-1.5"
+                        StartIcon={<MdPhone/>}
+                        title="Numero di telefono"
+                        type="tel"
+                        placeholder="Numero di telefono"
+                        value={formData.phone_number}
+                        onChange={(e) => {
+                            setFormData((prevData) => ({
+                                ...prevData,
+                                phone_number: e.target.value
+                            }));
+                        }}
+                    />
+                    <CustomInput
+                        ec="mt-1.5"
+                        StartIcon={<MdLock/>}
+                        title="Password"
+                        type="password"
+                        placeholder="Password"
+                        error={error.password}
+                        required
+                        value={formData.password}
+                        onChange={(e) => {
+                            setFormData((prevData) => ({
+                                ...prevData,
+                                password: e.target.value
+                            }));
+                        }}
+                    />
+                </div>
 
                 <div className="mt-5 flex justify-end gap-2">
-                    <CustomButton
-                        type="submit"
-                        text={type === "add" ? "Aggiungi" : "Modifica"}
-                        icon={type === "add" ? <MdPersonAdd/> : <MdModeEdit/>}
-                        color={type === "add" ? "green": undefined}
-                    />
                     <CustomButton
                         type="button"
                         text="Annulla"
                         icon={<MdCancel/>}
                         color="red"
                         onClick={handleClearAndClose}
+                    />
+                    <CustomButton
+                        type="submit"
+                        text={type === "add" ? "Aggiungi" : "Modifica"}
+                        icon={type === "add" ? <MdPersonAdd/> : <MdModeEdit/>}
+                        color={type === "add" ? "green": undefined}
                     />
                 </div>
             </form>

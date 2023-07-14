@@ -138,17 +138,17 @@ const CmpAddEditResourceType : React.FC<ICmpAddResourceType> = (props) => {
 
                     <div className="mt-5 flex justify-end gap-2">
                         <CustomButton
-                            type="submit"
-                            text={type === "add" ? "Aggiungi" : "Modifica"}
-                            icon={type === "add" ? <MdAdd/> : <MdModeEdit/>}
-                            color={type === "add" ? "green": undefined}
-                        />
-                        <CustomButton
                             type="button"
                             text="Annulla"
                             icon={<MdCancel/>}
                             color="red"
                             onClick={handleClearAndClose}
+                        />
+                        <CustomButton
+                            type="submit"
+                            text={type === "add" ? "Aggiungi" : "Modifica"}
+                            icon={type === "add" ? <MdAdd/> : <MdModeEdit/>}
+                            color={type === "add" ? "green": undefined}
                         />
                     </div>
                 </form>

@@ -25,8 +25,8 @@ const CustomAlertDialog: React.FC<ICustomAlertDialog> = (props) => {
               {text}
             </h3>
             <div className="space-x-2">
-              <CustomButton type="button" text={confirmBtn} onClick={handleConfirm} color="red"/>
               <CustomButton type="button" text={cancelBtn} onClick={handleCancel} color="gray"/>
+              <CustomButton type="button" text={confirmBtn} onClick={handleConfirm} color="red"/>
             </div>
           </div>
         </div>

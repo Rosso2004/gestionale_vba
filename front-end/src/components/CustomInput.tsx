@@ -16,10 +16,12 @@ interface ICustomInput {
     onChange?: (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
     value?: string;
     required?: boolean;
+    datePicker?: boolean;
+    rows?: number;
 }
 
 const CustomInput: React.FC<ICustomInput> = (props) => {
-    const {ec, id, type, title, textArea, placeholder, StartIcon, EndIcon, size, disabled, error, onChange, value, required} = props;
+    const {ec, id, type, title, textArea, placeholder, StartIcon, EndIcon, size, disabled, error, onChange, rows, value, required, datePicker} = props;
     const [passwordShow, setPasswordShow] = useState(false);
 
     const togglePassword = () => {
@@ -28,7 +30,7 @@ const CustomInput: React.FC<ICustomInput> = (props) => {
     return (
         <div className={`text-left ${ec}`}>
             {title && (
-            <label className={`block text-sm font-medium dark:text-white ${error ? 'text-red-700' : 'text-gray-900'}`}>{title}</label>
+                <label className={`mb-1 block text-sm font-medium dark:text-white ${error ? 'text-red-700' : 'text-gray-900'}`}>{title}</label>
             )}
             <div className="relative">
                 {StartIcon && (
@@ -52,7 +54,7 @@ const CustomInput: React.FC<ICustomInput> = (props) => {
                         </button>
                     </div>
                 )}
-                {!textArea && (<input
+                {!textArea && !datePicker && (<input
                     id={id}
                     type={type === "password" ? (passwordShow ? "text" : "password") : type}
                     onChange={onChange}
@@ -77,17 +79,21 @@ const CustomInput: React.FC<ICustomInput> = (props) => {
 
                 {textArea && (<textarea
                     id={id}
-                    rows={4}
+                    rows={rows ? rows : 4}
                     onChange={onChange}
                     value={value}
                     disabled={disabled}
                     required={required}
-                    className={`border text-gray-900 text-sm rounded-lg block w-full p-2.5
+                    className={`text-sm rounded-lg block w-full p-2.5
+                    ${
+                        disabled ? 'text-gray-400 bg-gray-50 border border-gray-200 focus:ring-gray-500 focus:border-gray-500' : 'text-gray-900 bg-gray-50 border border-gray-300 focus:ring-gray-500 focus:border-gray-500'
+                    }
                     ${
                         error ? 'border-red-500 placeholder-red-700 focus:ring-red-500 focus:border-red-500' : 'bg-gray-50 border border-gray-300 focus:ring-gray-500 focus:border-gray-500'
                     }`}
                     placeholder={placeholder}
                 />)}
+
             </div>
             <p className="text-sm text-red-600 dark:text-red-500">{error}</p>
         </div>

@@ -14,9 +14,11 @@ const PageDashboard = () => {
     })
 
     return (
-        <CustomPaper>
-            ciao
-        </CustomPaper>
+        <div className={`w-full mx-4 grid gap-4`}>
+            <CustomPaper>
+                <p>Work in progress...</p>
+            </CustomPaper>
+        </div>
     )
 }
 

@@ -1,7 +1,7 @@
 import CustomInput from "../CustomInput";
 import {MdSearch} from "react-icons/md";
 import CustomPaper from "../CutomPaper";
-import {useEffect} from "react";
+import {ReactNode, useEffect} from "react";
 import {Column, useSortBy, useTable, useGlobalFilter, useFilters, usePagination} from "react-table"
 import {MdArrowDropDown, MdArrowDropUp} from "react-icons/md";
 
@@ -9,10 +9,11 @@ type ICustomTable = {
     globalSearch?: boolean;
     columns: Column[];
     data: any[];
+    btnSupport?: ReactNode;
     hiddenColumns: string[];
 };
 const CustomTable: React.FC<ICustomTable> = (props) => {
-    const {globalSearch, columns, data, hiddenColumns} = props;
+    const {globalSearch, columns, data, hiddenColumns, btnSupport} = props;
 
 
     const {
@@ -72,10 +73,13 @@ const CustomTable: React.FC<ICustomTable> = (props) => {
 
     return (
         <CustomPaper ec="overflow-x-auto sm:rounded-lg">
-            {globalSearch && (
-                <div className="flex justify-end">
+            <div className="flex items-center justify-end">
+                {btnSupport && (
+                    btnSupport
+                )}
+                {globalSearch && (
                     <CustomInput
-                        ec="w-64 m-3"
+                        ec="w-64 mt-3 mb-3 mr-3"
                         type="text"
                         StartIcon={<MdSearch/>}
                         placeholder="Ricerca Globale"
@@ -84,8 +88,8 @@ const CustomTable: React.FC<ICustomTable> = (props) => {
                             setGlobalFilter(e.target.value);
                         }}
                     />
-                </div>
                 )}
+            </div>
             <table {...getTableProps()} className="w-full text-sm text-left text-gray-900">
                 <thead className="text-xs text-gray-700 uppercase bg-gray-50">
                 {
@@ -96,7 +100,7 @@ const CustomTable: React.FC<ICustomTable> = (props) => {
                                     <th
                                         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
                                         // @ts-ignore
-                                        {...column.getHeaderProps(column.getSortByToggleProps())}
+                                        {...column.getHeaderProps({style: { width: column.width }}, column.getSortByToggleProps())}
                                         className="px-3 py-3"
                                         onClick={(e) => {
                                             // eslint-disable-next-line @typescript-eslint/ban-ts-comment

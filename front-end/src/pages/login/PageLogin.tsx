@@ -21,8 +21,8 @@ const PageLogin = () => {
     const { setIsVerified } = useGlobalState();
 
     const [formData, setFormData] = useState<IFormData>({
-        emailUsername: 'simone@gmail.com',
-        password: 'simone',
+        emailUsername: '',
+        password: '',
         error: {
             emailUsername: '',
             password: ''
@@ -37,7 +37,6 @@ const PageLogin = () => {
             username: formData.emailUsername,
             password: formData.password
         }
-        console.log("cc", import.meta.env.VITE_URL_WEB_API)
         axios
             .post(import.meta.env.VITE_URL_WEB_API + '/api/user/verifyUser', toSubmit)
             .then((response)=>{
@@ -68,49 +67,52 @@ const PageLogin = () => {
     };
 
     return (
-        <div className="flex flex-col items-center justify-center h-screen">
-            <img src="../../public/vba.svg" className="h-44 mb-10" alt="Logo" />
+        <div className="flex flex-col justify-center h-screen bg-gray-200">
+            <div className="rounded-lg shadow-xl bg-white p-4 mx-auto">
+                <img src="../../public/vba.svg" className="mx-auto h-44 mb-5" alt="Logo" />
 
-            <form onSubmit={handleSubmit} className="flex flex-col items-center">
-                <h1 className="text-4xl mb-10">Login</h1>
-                <div className="flex flex-col items-center">
-                <CustomInput
-                    ec="mb-2 w-80"
-                    title="Email o Username"
-                    placeholder="Inserisci la tua email"
-                    StartIcon={<MdEmail/>}
-                    value={formData.emailUsername}
-                    error={formData.error.emailUsername}
-                    onChange={(e) => {
-                        setFormData((prevData) => ({
-                            ...prevData,
-                            emailUsername: e.target.value
-                        }));
-                    }}
-                />
+                <form onSubmit={handleSubmit} className="flex flex-col items-center">
+                    <h1 className="text-4xl mb-3">Login</h1>
+                    <div className="flex flex-col items-center">
+                    <CustomInput
+                        ec="mb-2 w-80"
+                        title="Email o Username"
+                        placeholder="Inserisci la tua email"
+                        StartIcon={<MdEmail/>}
+                        value={formData.emailUsername}
+                        error={formData.error.emailUsername}
+                        onChange={(e) => {
+                            setFormData((prevData) => ({
+                                ...prevData,
+                                emailUsername: e.target.value
+                            }));
+                        }}
+                    />
 
-                <CustomInput
-                    ec="mb-2 w-80"
-                    type="password"
-                    title="Password"
-                    placeholder="Inserisci la tua password"
-                    StartIcon={<MdLock/>}
-                    value={formData.password}
-                    error={formData.error.password}
-                    onChange={(e) => {
-                        setFormData((prevData) => ({
-                            ...prevData,
-                            password: e.target.value
-                        }));
-                    }}
-                />
-                <CustomButton
-                  type="submit"
-                  text="Login"
-                  icon={<MdLogin/>}
-                />
-                </div>
-            </form>
+                    <CustomInput
+                        ec="mb-2 w-80"
+                        type="password"
+                        title="Password"
+                        placeholder="Inserisci la tua password"
+                        StartIcon={<MdLock/>}
+                        value={formData.password}
+                        error={formData.error.password}
+                        onChange={(e) => {
+                            setFormData((prevData) => ({
+                                ...prevData,
+                                password: e.target.value
+                            }));
+                        }}
+                    />
+                    <CustomButton
+                      type="submit"
+                      text="Login"
+                      ec="mt-2"
+                      icon={<MdLogin/>}
+                    />
+                    </div>
+                </form>
+            </div>
         </div>
     )
 }

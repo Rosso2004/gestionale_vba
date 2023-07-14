@@ -15,13 +15,14 @@ const CustomModal: React.FC<ICustomModal> = (props) => {
             ${
                 !show ? 'hidden' : ''
              }`}>
-            <div className="relative w-full max-w-md max-h-full">
+            <div className="relative w-full max-w-xl max-h-full">
                 <div className="relative bg-white rounded-lg shadow">
-                    <div className="flex justify-between px-2 pt-2">
-                        <h3 className="text-xl font-medium text-gray-900">{title}</h3>
-                        <CustomButton type="button" onClick={handleClose} icon={<MdClose/>} color="gray"/>
+                    <div className="flex justify-between p-2">
+                        <h3 className="text-xl ml-1.5 mt-1.5 font-medium text-gray-900">{title}</h3>
+                        <CustomButton type="button" ec="mr-1.5 mt-1.5" onClick={handleClose} icon={<MdClose/>} color="gray"/>
                     </div>
-                    <div className="py-4 lg:px-4">
+                    <hr className="mt-1.5 h-3 solid"/>
+                    <div className="pb-4 lg:px-4">
                         {children}
                     </div>
                 </div>

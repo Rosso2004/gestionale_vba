@@ -1,8 +1,8 @@
 const express = require('express');
-const customerSUpplierRouter = require('../controllers/customerSupplierController');
+const customerSupplierRouter = require('../controllers/customerSupplierController');
 
 const router = express.Router();
 
-router.use('/customerSupplier', customerSUpplierRouter);
+router.use('/customerSupplier', customerSupplierRouter);
 
 module.exports = router;

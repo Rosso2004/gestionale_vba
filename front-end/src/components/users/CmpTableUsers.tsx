@@ -99,6 +99,7 @@ const CmpTableUsers: React.FC<ICmpTableResourcesType> = (props) => {
             {
                 Header: 'Azioni',
                 disableFilters: true,
+                width: 30,
                 Cell: ({row}: any) => {
                     const {values} = row;
                     return (

@@ -9,7 +9,6 @@ import {IUsers} from "../interfaces/IUsers";
 import CmpTableUsers from "../components/users/CmpTableUsers";
 import CmpAddEditUser from "../components/users/CmpAddEditUser";
 import {toast} from "react-toastify";
-import success = toast.success;
 
 const PageUsers = () => {
     const navigate = useNavigate();
@@ -44,7 +43,7 @@ const PageUsers = () => {
     };
 
     return (
-        <div className={`w-full mx-40 grid gap-4`}>
+        <div className={`w-full mx-4 grid gap-4`}>
             <CustomPaper ec="m-3 flex justify-end gap-2">
                 <CustomButton type="button" text="Nuovo Utente" icon={<MdPersonAdd/>} onClick={handleShowAddUser}></CustomButton>
             </CustomPaper>

@@ -26,7 +26,7 @@ const CustomSelect: React.FC<ICustomSelect> = (props) => {
     return (
         <div className={`text-left ${ec}`}>
             {title && (
-                <label className={`block text-sm font-medium ${error ? 'text-red-700' : 'text-gray-900'}`}>{title}</label>
+                <label className={`mb-1 block text-sm font-medium ${error ? 'text-red-700' : 'text-gray-900'}`}>{title}</label>
             )}
             <div className="relative">
                 <select
@@ -35,7 +35,10 @@ const CustomSelect: React.FC<ICustomSelect> = (props) => {
                         error ? 'border-red-500 placeholder-red-700 focus:ring-red-500 focus:border-red-500' : 'bg-gray-50 border border-gray-300 focus:ring-gray-500 focus:border-gray-500'
                     }
                     ${
-                        disabled ? 'text-gray-500' : 'text-gray-900'
+                        disabled ? 'text-gray-500' : ''
+                    }
+                    ${
+                        value === '' ? 'text-gray-500' : ''
                     }`}
                     value={value}
                     onChange={handleSelectChange}

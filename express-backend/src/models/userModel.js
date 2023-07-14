@@ -39,6 +39,17 @@ class User {
         }
     }
 
+    static async changeUserPassword(id, password) {
+        const [checkResults] = await db.query('SELECT id FROM users WHERE id = ?', [id]);
+        if (checkResults.length === 0) {
+            return {status: 404, error: 'Utente non trovato'};
+        } else if (checkResults.length === 1) {
+            const hashedPassword = await bcrypt.hash(password, 10);
+            await db.query('UPDATE users SET password = ? WHERE id = ?', [hashedPassword, id]);
+            return {status: 200, message: 'Password aggiornata con successo'};
+        }
+    }
+
     static async verifyUser(email, username, password) {
         const [results] = await db.query('SELECT * FROM users WHERE email = ? OR username = ?', [email, username]);
 

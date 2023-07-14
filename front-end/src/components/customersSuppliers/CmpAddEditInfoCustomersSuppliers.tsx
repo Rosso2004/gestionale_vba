@@ -234,177 +234,176 @@ const CmpAddEditInfoCustomersSuppliers : React.FC<ICmpAddEditInfoCustomersSuppli
 
     return (
         <CustomModal title={type === "add" ? "Inserimento Cliente / Fornitore" : type === "update" ? "Modifica Cliente / Fornitore" : "Informazioni Cliente / Fornitore"} show={show} handleClose={handleClearAndClose}>
-            <form className="" onSubmit={handleSubmit}>
-                <CustomSelect
-                    ec="mt-1.5"
-                    title="Tipo Risorsa"
-                    disabled={type === "info"}
-                    option={selectInputData.type.map((item: IResourcesType) => ({ id: item.id, name: item.name }))}
-                    value={formData.type.id}
-                    error={error.type}
-                    onChange={(e) => {
-                        setFormData((prevData) => ({
-                            ...prevData,
-                            type: {
-                                ...prevData.type,
-                                id: e
-                            }
-                        }))
-                    }}
-                />
-                <CustomSelect
-                    ec="mt-1.5"
-                    title="Funzione Risorsa"
-                    disabled={type === "info"}
-                    option={selectInputData.fnc.map((item: IResourcesFunction) => ({ id: item.id, name: item.name }))}
-                    value={formData.fnc.id}
-                    error={error.fnc}
-                    onChange={(e) => {
-                        setFormData((prevData) => ({
-                            ...prevData,
-                            fnc: {
-                                ...prevData.fnc,
-                                id: e
-                            }
-                        }))
-                        console.log(formData.fnc)
-                    }}
-                />
-                <CustomInput
-                    ec="mt-1.5"
-                    StartIcon={<MdTextFields/>}
-                    title="Nome Risorsa"
-                    placeholder="Nome Risorsa"
-                    type="text"
-                    disabled={type === "info"}
-                    value={formData.name}
-                    error={error.name}
-                    onChange={(e) => {
-                        setFormData((prevData) => ({
-                            ...prevData,
-                            name: e.target.value
-                        }));
-                    }}
-                />
-                <CustomInput
-                    ec="mt-1.5"
-                    StartIcon={<MdLocationCity/>}
-                    title="Città"
-                    placeholder="Città"
-                    type="text"
-                    disabled={type === "info"}
-                    value={formData.city}
-                    onChange={(e) => {
-                        setFormData((prevData) => ({
-                            ...prevData,
-                            city: e.target.value
-                        }));
-                    }}
-                />
-                <CustomInput
-                    ec="mt-1.5"
-                    StartIcon={<MdSignpost/>}
-                    title="Indirizzo"
-                    placeholder="Indirizzo"
-                    type="text"
-                    disabled={type === "info"}
-                    value={formData.address}
-                    onChange={(e) => {
-                        setFormData((prevData) => ({
-                            ...prevData,
-                            address: e.target.value
-                        }));
-                    }}
-                />
-                <CustomInput
-                    ec="mt-1.5"
-                    StartIcon={<MdMap/>}
-                    title="CAP"
-                    placeholder="CAP"
-                    type="text"
-                    disabled={type === "info"}
-                    value={formData.cap}
-                    onChange={(e) => {
-                        setFormData((prevData) => ({
-                            ...prevData,
-                            cap: e.target.value
-                        }));
-                    }}
-                />
-                <CustomInput
-                    ec="mt-1.5"
-                    StartIcon={<MdDialpad/>}
-                    title="Numero di Telefono"
-                    placeholder="Numero di Telefono"
-                    type="text"
-                    disabled={type === "info"}
-                    value={formData.phone_number}
-                    onChange={(e) => {
-                        setFormData((prevData) => ({
-                            ...prevData,
-                            phone_number: e.target.value
-                        }));
-                    }}
-                />
-                <CustomInput
-                    ec="mt-1.5"
-                    StartIcon={<MdEmail/>}
-                    title="Email"
-                    placeholder="Email"
-                    type="text"
-                    disabled={type === "info"}
-                    value={formData.email}
-                    onChange={(e) => {
-                        setFormData((prevData) => ({
-                            ...prevData,
-                            email: e.target.value
-                        }));
-                    }}
-                />
-                <CustomInput
-                    ec="mt-1.5"
-                    StartIcon={<MdReceipt/>}
-                    title="P. IVA"
-                    placeholder="P. IVA"
-                    type="text"
-                    disabled={type === "info"}
-                    value={formData.piva}
-                    onChange={(e) => {
-                        setFormData((prevData) => ({
-                            ...prevData,
-                            piva: e.target.value
-                        }));
-                    }}
-                />
-                <CustomInput
-                    ec="mt-1.5"
-                    StartIcon={<MdAccountBalance/>}
-                    title="IBAN"
-                    placeholder="IBAN"
-                    type="text"
-                    disabled={type === "info"}
-                    value={formData.iban}
-                    onChange={(e) => {
-                        setFormData((prevData) => ({
-                            ...prevData,
-                            iban: e.target.value
-                        }));
-                    }}
-                />
+            <form onSubmit={handleSubmit}>
+                <div className="grid grid-cols-2 gap-2">
+                    <CustomSelect
+                        title="Tipo Risorsa"
+                        disabled={type === "info"}
+                        option={selectInputData.type.map((item: IResourcesType) => ({ id: item.id, name: item.name }))}
+                        value={formData.type.id}
+                        error={error.type}
+                        onChange={(e) => {
+                            setFormData((prevData) => ({
+                                ...prevData,
+                                type: {
+                                    ...prevData.type,
+                                    id: e
+                                }
+                            }))
+                        }}
+                    />
+                    <CustomSelect
+                        title="Funzione Risorsa"
+                        disabled={type === "info"}
+                        option={selectInputData.fnc.map((item: IResourcesFunction) => ({ id: item.id, name: item.name }))}
+                        value={formData.fnc.id}
+                        error={error.fnc}
+                        onChange={(e) => {
+                            setFormData((prevData) => ({
+                                ...prevData,
+                                fnc: {
+                                    ...prevData.fnc,
+                                    id: e
+                                }
+                            }))
+                        }}
+                    />
+                    <CustomInput
+                        ec="mt-1.5"
+                        StartIcon={<MdTextFields/>}
+                        title="Nome Risorsa"
+                        placeholder="Nome Risorsa"
+                        type="text"
+                        disabled={type === "info"}
+                        value={formData.name}
+                        error={error.name}
+                        onChange={(e) => {
+                            setFormData((prevData) => ({
+                                ...prevData,
+                                name: e.target.value
+                            }));
+                        }}
+                    />
+                    <CustomInput
+                        ec="mt-1.5"
+                        StartIcon={<MdLocationCity/>}
+                        title="Città"
+                        placeholder="Città"
+                        type="text"
+                        disabled={type === "info"}
+                        value={formData.city}
+                        onChange={(e) => {
+                            setFormData((prevData) => ({
+                                ...prevData,
+                                city: e.target.value
+                            }));
+                        }}
+                    />
+                    <CustomInput
+                        ec="mt-1.5"
+                        StartIcon={<MdSignpost/>}
+                        title="Indirizzo"
+                        placeholder="Indirizzo"
+                        type="text"
+                        disabled={type === "info"}
+                        value={formData.address}
+                        onChange={(e) => {
+                            setFormData((prevData) => ({
+                                ...prevData,
+                                address: e.target.value
+                            }));
+                        }}
+                    />
+                    <CustomInput
+                        ec="mt-1.5"
+                        StartIcon={<MdMap/>}
+                        title="CAP"
+                        placeholder="CAP"
+                        type="text"
+                        disabled={type === "info"}
+                        value={formData.cap}
+                        onChange={(e) => {
+                            setFormData((prevData) => ({
+                                ...prevData,
+                                cap: e.target.value
+                            }));
+                        }}
+                    />
+                    <CustomInput
+                        ec="mt-1.5"
+                        StartIcon={<MdDialpad/>}
+                        title="Numero di Telefono"
+                        placeholder="Numero di Telefono"
+                        type="text"
+                        disabled={type === "info"}
+                        value={formData.phone_number}
+                        onChange={(e) => {
+                            setFormData((prevData) => ({
+                                ...prevData,
+                                phone_number: e.target.value
+                            }));
+                        }}
+                    />
+                    <CustomInput
+                        ec="mt-1.5"
+                        StartIcon={<MdEmail/>}
+                        title="Email"
+                        placeholder="Email"
+                        type="text"
+                        disabled={type === "info"}
+                        value={formData.email}
+                        onChange={(e) => {
+                            setFormData((prevData) => ({
+                                ...prevData,
+                                email: e.target.value
+                            }));
+                        }}
+                    />
+                    <CustomInput
+                        ec="mt-1.5"
+                        StartIcon={<MdReceipt/>}
+                        title="P. IVA"
+                        placeholder="P. IVA"
+                        type="text"
+                        disabled={type === "info"}
+                        value={formData.piva}
+                        onChange={(e) => {
+                            setFormData((prevData) => ({
+                                ...prevData,
+                                piva: e.target.value
+                            }));
+                        }}
+                    />
+                    <CustomInput
+                        ec="mt-1.5"
+                        StartIcon={<MdAccountBalance/>}
+                        title="IBAN"
+                        placeholder="IBAN"
+                        type="text"
+                        disabled={type === "info"}
+                        value={formData.iban}
+                        onChange={(e) => {
+                            setFormData((prevData) => ({
+                                ...prevData,
+                                iban: e.target.value
+                            }));
+                        }}
+                    />
+                </div>
 
                 {type !== "info" && (<div className="mt-5 flex justify-end gap-2">
-                    <CustomButton
-                        type="submit"
-                        text={type === "add" ? "Aggiungi" : "Modifica"}
-                        icon={type === "add" ? <MdAdd/> : <MdModeEdit/>}
-                        color={type === "add" ? "green" : undefined}
-                    />
                     <CustomButton
                         type="button"
                         text="Annulla"
                         icon={<MdCancel/>}
                         color="red"
                         onClick={handleClearAndClose}
+                    />
+                    <CustomButton
+                        type="submit"
+                        text={type === "add" ? "Aggiungi" : "Modifica"}
+                        icon={type === "add" ? <MdAdd/> : <MdModeEdit/>}
+                        color={type === "add" ? "green" : undefined}
                     />
                 </div>)}
             </form>
