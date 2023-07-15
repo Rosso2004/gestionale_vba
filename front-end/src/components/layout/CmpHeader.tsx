@@ -12,7 +12,7 @@ const CmpHeader: React.FC<ICmpHeader> = (props) => {
                 <div className="flex items-center justify-between">
                     <div className="flex items-center justify-start">
                         <a href="https://flowbite.com" className="flex ml-2 md:mr-24">
-                            <img src="../../../public/vba.svg" className="h-8 mr-3"
+                            <img src="https://imgur.com/O5eOwcU.png" className="h-8 mr-3"
                                  alt="FlowBite Logo"/>
                             <span
                                 className="self-center text-xl font-semibold sm:text-2xl whitespace-nowrap dark:text-white">VBA</span>

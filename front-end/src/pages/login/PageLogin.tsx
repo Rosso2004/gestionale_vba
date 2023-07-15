@@ -69,7 +69,7 @@ const PageLogin = () => {
     return (
         <div className="flex flex-col justify-center h-screen bg-gray-200">
             <div className="rounded-lg shadow-xl bg-white p-4 mx-auto">
-                <img src="../../public/vba.svg" className="mx-auto h-44 mb-5" alt="Logo" />
+                <img src="https://imgur.com/O5eOwcU.png" className="mx-auto h-44 mb-5" alt="Logo" />
 
                 <form onSubmit={handleSubmit} className="flex flex-col items-center">
                     <h1 className="text-4xl mb-3">Login</h1>
