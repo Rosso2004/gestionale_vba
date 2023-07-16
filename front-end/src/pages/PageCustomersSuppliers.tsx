@@ -24,13 +24,30 @@ const PageCustomersSuppliers = () => {
 
     useEffect(() => {
         fetchCustomersSuppliers();
+        console.log(customersSuppliersData)
     }, []);
 
     const fetchCustomersSuppliers = () => {
         axios
             .get(import.meta.env.VITE_URL_WEB_API + '/api/customerSupplier/getAllCustomerSupplier')
             .then((response) => {
-                setCustomersSuppliersData(response.data);
+                const dataTo = response.data.map((res) => {
+                    return ({
+                        id: res.id,
+                        type: JSON.parse(res.type),
+                        fnc: JSON.parse(res.fnc),
+                        name: res.name,
+                        city: res.city,
+                        address: res.address,
+                        cap: res.cap,
+                        phone_number: res.phone_number,
+                        email: res.email,
+                        piva: res.piva,
+                        iban: res.iban
+                    })
+                })
+                console.log("data: ", dataTo)
+                setCustomersSuppliersData(dataTo);
             })
             .catch((error) => {
                 toast.error(error);
