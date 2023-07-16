@@ -17,19 +17,39 @@ class Order {
             "INNER JOIN orders_status ON orders.status = orders_status.id\n" +
             "INNER JOIN orders_types ON orders.type = orders_types.id;");
 
-
-        const toReturn = results.map((row) => {
+        const parsedResults = results.map(result => {
+            const parsedManager = JSON.parse(result.manager);
+            const parsedCustomer = JSON.parse(result.customer);
+            const parsedStatus = JSON.parse(result.status);
+            const parsedType = JSON.parse(result.type);
             return {
-                ...row,
-                manager: JSON.parse(row.manager),
-                customer: JSON.parse(row.customer),
-                status: JSON.parse(row.status),
-                type: JSON.parse(row.type)
+                id: result.id,
+                manager: {
+                    id: parsedManager.id,
+                    name: parsedManager.name
+                },
+                customer: {
+                    id: parsedCustomer.id,
+                    name: parsedCustomer.name
+                },
+                name: result.name,
+                status: {
+                    id: parsedStatus.id,
+                    name: parsedStatus.name
+                },
+                type: {
+                    id: parsedType.id,
+                    name: parsedType.name
+                },
+                start_date: result.start_date,
+                end_date: result.end_date,
+                note: result.note
             };
         });
 
-        return toReturn;
+        return parsedResults;
     }
+
 
     static async getAllOrderNew() {
         return {pippo: "ciao"}

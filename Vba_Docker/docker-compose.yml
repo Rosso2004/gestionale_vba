@@ -12,12 +12,6 @@ services:
       - "8086:80"
     expose:
       - '8086'
-#    labels:
-#      - "traefik.enable=true"
-#      - "traefik.docker.network=proxy"
-#      - "traefik.http.routers.app_vba.rule=Host(`app.vbup.it`)"
-#      - "traefik.http.routers.app_vba.entrypoints=websecure"
-#      - "traefik.http.routers.app_vba.tls.certresolver=myresolver"
     volumes:
       - ./config.js:/usr/share/nginx/html/config.js
 
@@ -60,18 +54,6 @@ services:
       DB_NAME: 'gestionale_vba'
       PORT: '5000'
       SECRET_KEY: 'chiavesegreta'
-#    labels:
-#      - "traefik.enable=true"
-#      - "traefik.docker.network=proxy"
-#      - "traefik.http.routers.api_vba.rule=Host(`app.vbup.it`) && PathPrefix(`/api`)"
-#      - "traefik.http.routers.api_vba.entrypoints=websecure"
-#      - "traefik.http.routers.api_vba.tls.certresolver=myresolver"
-
 # Names our volume
 volumes:
   my-db-vba:
-
-networks:
-  default:
-    name: proxy
-    external: true

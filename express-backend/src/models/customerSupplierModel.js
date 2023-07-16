@@ -17,16 +17,35 @@ class CustomerSupplier {
             "INNER JOIN resources_type ON customers_suppliers.type = resources_type.id\n" +
             "INNER JOIN resources_function ON customers_suppliers.fnc = resources_function.id;");
 
-        const toReturn = results.map((row) => {
+        const parsedResults = results.map(result => {
+            const parsedType = JSON.parse(result.type);
+            const parsedFnc = JSON.parse(result.fnc);
             return {
-                ...row,
-                type: JSON.parse(row.type),
-                fnc: JSON.parse(row.fnc)
+                id: result.id,
+                type: {
+                    id: parsedType.id,
+                    name: parsedType.name,
+                    description: parsedType.description,
+                    note: parsedType.note
+                },
+                fnc: {
+                    id: parsedFnc.id,
+                    name: parsedFnc.name
+                },
+                name: result.name,
+                city: result.city,
+                address: result.address,
+                cap: result.cap,
+                phone_number: result.phone_number,
+                email: result.email,
+                piva: result.piva,
+                iban: result.iban
             };
         });
 
-        return toReturn;
+        return parsedResults;
     }
+
 
     static async createCustomerSupplier(type, fnc, name, city, address, cap, phone_number, email, piva, iban) {
         const [checkResults] = await db.query('SELECT id FROM customers_suppliers WHERE name = ?', [name]);
