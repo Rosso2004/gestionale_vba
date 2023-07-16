@@ -17,13 +17,15 @@ class CustomerSupplier {
             "INNER JOIN resources_type ON customers_suppliers.type = resources_type.id\n" +
             "INNER JOIN resources_function ON customers_suppliers.fnc = resources_function.id;");
 
-        return results.map((row) => {
+        const toReturn = results.map((row) => {
             return {
                 ...row,
                 type: JSON.parse(row.type),
                 fnc: JSON.parse(row.fnc)
             };
         });
+
+        return toReturn;
     }
 
     static async createCustomerSupplier(type, fnc, name, city, address, cap, phone_number, email, piva, iban) {

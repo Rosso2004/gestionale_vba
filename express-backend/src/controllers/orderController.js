@@ -4,8 +4,7 @@ const Order = require('../models/orderModel');
 const router = express.Router();
 
 router.get('/getAllOrder', async (req, res) => {
-    // const order = await Order.getAllOrder();
-    const order = await Order.getAllOrderNew();
+    const order = await Order.getAllOrder();
     res.json(order);
 });
 

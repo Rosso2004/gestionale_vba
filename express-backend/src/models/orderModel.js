@@ -17,7 +17,8 @@ class Order {
             "INNER JOIN orders_status ON orders.status = orders_status.id\n" +
             "INNER JOIN orders_types ON orders.type = orders_types.id;");
 
-        return results.map((row) => {
+
+        const toReturn = results.map((row) => {
             return {
                 ...row,
                 manager: JSON.parse(row.manager),
@@ -26,10 +27,11 @@ class Order {
                 type: JSON.parse(row.type)
             };
         });
+
+        return toReturn;
     }
 
     static async getAllOrderNew() {
-
         return {pippo: "ciao"}
     }
 
