@@ -1,7 +1,7 @@
 import CustomTable from "../table/CustomTable";
 import CustomButton from "../CustomButton";
 import {MdDelete, MdInfoOutline, MdModeEdit} from "react-icons/md"
-import {useMemo, useState} from "react";
+import {useCallback, useMemo, useState} from "react";
 import getIndex from "../../utility/getIndex";
 import {ICustomersSuppliers} from "../../interfaces/ICustomersSuppliers";
 import CmpAddEditInfoCustomersSuppliers from "./CmpAddEditInfoCustomersSuppliers";
@@ -44,7 +44,7 @@ const CmpTableCustomersSuppliers: React.FC<ICmpTableCustomersSuppliers> = (props
         }
     });
 
-    const handleShowActionCustomersSuppliers = (id: string | undefined, type: "info" | "update" | "delete") => {
+    const handleShowActionCustomersSuppliers = useCallback((id: string | undefined, type: "info" | "update" | "delete") => {
         const indexPump = getIndex(data, "id", id)
         if (type === "update") {
             setShowActionCustomersSuppliers({
@@ -74,7 +74,7 @@ const CmpTableCustomersSuppliers: React.FC<ICmpTableCustomersSuppliers> = (props
                 }
             });
         }
-    };
+    }, [data, setShowActionCustomersSuppliers]);
 
     const handleCancelActionCustomersSuppliers = () => {
         setShowActionCustomersSuppliers({
