@@ -31,7 +31,7 @@ const PageCustomersSuppliers = () => {
         axios
             .get(import.meta.env.VITE_URL_WEB_API + '/api/customerSupplier/getAllCustomerSupplier')
             .then((response) => {
-                const dataTo = response.data.map((res) => {
+                const dataTo = response.data.map((res: any) => {
                     return ({
                         id: res.id,
                         type: JSON.parse(res.type),
