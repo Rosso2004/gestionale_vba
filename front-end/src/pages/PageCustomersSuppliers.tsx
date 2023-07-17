@@ -24,7 +24,6 @@ const PageCustomersSuppliers = () => {
 
     useEffect(() => {
         fetchCustomersSuppliers();
-        console.log(customersSuppliersData)
     }, []);
 
     const fetchCustomersSuppliers = () => {
@@ -46,7 +45,6 @@ const PageCustomersSuppliers = () => {
                         iban: res.iban
                     })
                 })
-                console.log("data: ", dataTo)
                 setCustomersSuppliersData(dataTo);
             })
             .catch((error) => {
