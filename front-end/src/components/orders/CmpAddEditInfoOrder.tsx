@@ -110,10 +110,7 @@ const CmpAddEditInfoOrder : React.FC<ICmpAddEditInfoCustomersSuppliers> = (props
         axios
             .get(import.meta.env.VITE_URL_WEB_API + '/api/customerSupplier/getAllCustomerSupplier')
             .then((response) => {
-                const filteredData = response.data.filter((res: { fnc: string }) => {
-                    const parsedFnc = JSON.parse(res.fnc);
-                    return parsedFnc.id === 1 || parsedFnc.id === 2;
-                });
+                const filteredData = response.data.filter((res: { fnc: {id: number} }) => res.fnc.id === 1 || res.fnc.id === 2);
                 const customerData = filteredData.map((res: { id: string; name: string; }) => ({
                     id: res.id,
                     name: res.name,
