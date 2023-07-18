@@ -3,7 +3,7 @@ WORKDIR /app
 COPY . .
 RUN npm i -g pnpm
 RUN pnpm install
-RUN pnpm run build
+RUN pnpm build
 
 FROM ubuntu
 RUN apt-get update
