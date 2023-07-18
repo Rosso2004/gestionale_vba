@@ -1,15 +1,15 @@
 FROM node:18
 
 # Create app directory
-WORKDIR /usr/src/app
+WORKDIR /app
 
 # Install app dependencies
 # A wildcard is used to ensure both package.json AND package-lock.json are copied
 # where available (npm@5+)
-COPY package*.json ./
+COPY package.json pnpm-lock.yaml ./
 
-RUN npm i -g pnpm
-RUN pnpm install
+RUN npm install -g pnpm
+RUN pnpm install --frozen-lockfile
 #RUN npm install
 # If you are building your code for production
 # RUN npm ci --omit=dev
@@ -18,4 +18,4 @@ RUN pnpm install
 COPY . .
 
 EXPOSE 5000
-CMD [ "node", "src/app.js" ]
+CMD [ "pnpm", "start" ]
