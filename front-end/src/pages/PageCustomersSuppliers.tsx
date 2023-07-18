@@ -30,7 +30,22 @@ const PageCustomersSuppliers = () => {
         axios
             .get(import.meta.env.VITE_URL_WEB_API + '/api/customerSupplier/getAllCustomerSupplier')
             .then((response) => {
-                setCustomersSuppliersData(response.data);
+                const dataTo = response.data.map((res: any) => {
+                    return ({
+                        id: res.id,
+                        type: JSON.parse(res.type),
+                        fnc: JSON.parse(res.fnc),
+                        name: res.name,
+                        city: res.city,
+                        address: res.address,
+                        cap: res.cap,
+                        phone_number: res.phone_number,
+                        email: res.email,
+                        piva: res.piva,
+                        iban: res.iban
+                    })
+                })
+                setCustomersSuppliersData(dataTo);
             })
             .catch((error) => {
                 toast.error(error);
