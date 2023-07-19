@@ -3,11 +3,11 @@ const db = require('../database/db');
 class Order {
     static async getAllOrder() {
         const [results] = await db.query("SELECT orders.id,\n" +
-            "\t\t JSON_OBJECT('id', users.id, 'name', CONCAT(users.lastname, ' ', users.firstname)) AS manager,\n" +
-            "\t\t JSON_OBJECT('id', customers_suppliers.id, 'name', customers_suppliers.name) AS customer,\n" +
+            "\t\t users.id AS uId, CONCAT(users.lastname, ' ', users.firstname) AS uName,\n" +
+            "\t\t customers_suppliers.id AS csId, customers_suppliers.name AS csName,\n" +
             "\t\t orders.name,\n" +
-            "\t\t JSON_OBJECT('id', orders_status.id, 'name', orders_status.name) AS status,\n" +
-            "\t\t JSON_OBJECT('id', orders_types.id, 'name', orders_types.name) AS type,\n" +
+            "\t\t orders_status.id AS osId, orders_status.name AS osName,\n" +
+            "\t\t orders_types.id otId, orders_types.name AS otName,\n" +
             "\t\t orders.start_date,\n" +
             "\t\t orders.end_date,\n" +
             "\t\t orders.note\n" +
@@ -17,7 +17,31 @@ class Order {
             "INNER JOIN orders_status ON orders.status = orders_status.id\n" +
             "INNER JOIN orders_types ON orders.type = orders_types.id;");
 
-        return results;
+        const data = results.map((row) => ({
+            id: row.id,
+            manager: {
+                id: row.uId,
+                name: row.uName,
+            },
+            customer: {
+                id: row.csId,
+                name: row.csName
+            },
+            name: row.name,
+            status: {
+                id: row.osId,
+                name: row.osName
+            },
+            type: {
+                id: row.otId,
+                name: row.otName
+            },
+            start_date: row.start_date,
+            end_date: row.end_date,
+            note: row.note
+        }));
+
+        return data;
     }
 
 

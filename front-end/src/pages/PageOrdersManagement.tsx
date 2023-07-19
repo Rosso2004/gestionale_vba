@@ -30,20 +30,7 @@ const PageOrdersManagement = () => {
         axios
             .get(import.meta.env.VITE_URL_WEB_API + '/api/order/getAllOrder')
             .then((response) => {
-                const dataTo = response.data.map((res: any) => {
-                    return ({
-                        id: res.id,
-                        manager: JSON.parse(res.manager),
-                        customer: JSON.parse(res.customer),
-                        name: res.name,
-                        status: JSON.parse(res.status),
-                        type: JSON.parse(res.type),
-                        start_date: res.start_date,
-                        end_date: res.end_date,
-                        note: res.note
-                    })
-                })
-                setOrdersData(dataTo);
+                setOrdersData(response.data);
             })
             .catch((error) => {
                 toast.error(error);

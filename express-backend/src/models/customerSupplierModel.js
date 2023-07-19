@@ -3,8 +3,8 @@ const db = require('../database/db');
 class CustomerSupplier {
     static async getAllCustomerSupplier() {
         const [results] = await db.query("SELECT customers_suppliers.id,\n" +
-            "\t\t JSON_OBJECT('id', resources_type.id, 'name', resources_type.name, 'description', resources_type.description, 'note', resources_type.note) AS type,\n" +
-            "\t\t JSON_OBJECT('id', resources_function.id, 'name', resources_function.name) AS fnc,\n" +
+            "\t\t resources_type.id AS rtId, resources_type.name AS rtName, resources_type.description AS rtDescription, resources_type.note AS rtNote,\n" +
+            "\t\t resources_function.id AS rfId, resources_function.name AS rfName,\n" +
             "\t\t customers_suppliers.name,\n" +
             "\t\t customers_suppliers.city,\n" +
             "\t\t customers_suppliers.address,\n" +
@@ -17,7 +17,29 @@ class CustomerSupplier {
             "INNER JOIN resources_type ON customers_suppliers.type = resources_type.id\n" +
             "INNER JOIN resources_function ON customers_suppliers.fnc = resources_function.id;");
 
-        return results;
+        const data = results.map((row) => ({
+            id: row.id,
+            type: {
+                id: row.rtId,
+                name: row.rtName,
+                description: row.rtDescription,
+                note: row.rtNote
+            },
+            fnc: {
+              id: row.rfId,
+              name: row.rfName
+            },
+            name: row.name,
+            city: row.city,
+            address: row.address,
+            cap: row.cap,
+            phone_number: row.phone_number,
+            email: row.email,
+            piva: row.piva,
+            iban: row.iban
+        }));
+
+        return data;
     }
 
     static async createCustomerSupplier(type, fnc, name, city, address, cap, phone_number, email, piva, iban) {
