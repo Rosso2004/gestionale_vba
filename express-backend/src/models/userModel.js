@@ -1,4 +1,6 @@
 const db = require('../database/db');
+const jwt = require('jsonwebtoken');
+const dotenv = require("dotenv");
 const bcrypt = require('bcrypt');
 
 class User {
@@ -69,8 +71,9 @@ class User {
 
     static async deleteUser(id) {
         const [checkResults] = await db.query('SELECT id FROM users WHERE id = ?', [id]);
-
-        if (checkResults.length === 0) {
+        if (checkResults.length > 0) {
+            return { status: 409, message: 'Impossibile eliminare questo utente poichè è utilizzato in una commessa' };
+        } else if (checkResults.length === 0) {
             return { status: 404, message: 'Utente non trovato' };
         } else if (checkResults.length === 1) {
             await db.query('DELETE FROM users WHERE id = ?', [id]);

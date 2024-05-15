@@ -25,6 +25,10 @@ const CmpDeleteUser: React.FC<ICmpDeleteUser> = (props) => {
                 if (error.response.status === 404) {
                     toast.error(error.response.data)
                 }
+                if (error.response.status === 409) {
+                    handleCancel();
+                    toast.error(error.response.data)
+                }
             });
     }
     return (

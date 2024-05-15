@@ -1,24 +1,16 @@
-import {useGlobalState} from "../global/GlobalStateContext";
 import CustomPaper from "../components/CutomPaper";
 import CustomButton from "../components/CustomButton";
 import {MdAdd} from "react-icons/md";
 import {useState, useEffect} from "react";
 import CmpAddEditResourceType from "../components/resourcesType/CmpAddEditResourceType";
 import CmpTableResourcesType from "../components/resourcesType/CmpTableResourcesType";
-import {useNavigate} from "react-router-dom";
 import {IResourcesType} from "../interfaces/IResourcesType"
 import axios from "axios";
 import {toast} from "react-toastify";
+import useTokenCheck from "../utility/useTokenCheck.ts";
 
 const PageResourcesType = () => {
-    const navigate = useNavigate();
-    const { isVerified } = useGlobalState();
-
-    useEffect(() => {
-        if (!isVerified) {
-            return navigate("/")
-        }
-    })
+    useTokenCheck();
 
     const [resourcesTypeData, setResourcesTypeData] = useState<IResourcesType[]>([]);
 

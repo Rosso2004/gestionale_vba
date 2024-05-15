@@ -1,24 +1,16 @@
-import {useGlobalState} from "../global/GlobalStateContext";
 import CustomPaper from "../components/CutomPaper";
 import CustomButton from "../components/CustomButton";
 import {MdAdd} from "react-icons/md";
-import {useNavigate} from "react-router-dom";
 import {useEffect, useState} from "react";
 import CmpAddEditInfoOrder from "../components/orders/CmpAddEditInfoOrder";
 import axios from "axios";
 import {toast} from "react-toastify";
 import {IOrders} from "../interfaces/IOrders";
 import CmpTableOrders from "../components/orders/CmpTableOrders";
+import useTokenCheck from "../utility/useTokenCheck.ts";
 
 const PageOrdersManagement = () => {
-    const navigate = useNavigate();
-    const { isVerified } = useGlobalState();
-
-    useEffect(() => {
-        if (!isVerified) {
-            return navigate("/")
-        }
-    })
+    useTokenCheck();
 
     const [ordersData, setOrdersData] = useState<IOrders[]>([]);
 

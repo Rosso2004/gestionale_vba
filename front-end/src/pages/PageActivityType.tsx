@@ -1,6 +1,8 @@
 import CustomPaper from "../components/CutomPaper";
+import useTokenCheck from "../utility/useTokenCheck.ts";
 
 const PageActivityType = () => {
+    useTokenCheck();
     return (
         <div className={`w-full mx-4 grid gap-4`}>
             <CustomPaper>

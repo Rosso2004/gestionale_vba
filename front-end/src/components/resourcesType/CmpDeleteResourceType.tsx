@@ -10,7 +10,7 @@ type ICmpDeleteResourceType = {
   onUpdate: () => void;
 }
 const CmpDeleteResourceType: React.FC<ICmpDeleteResourceType> = (props) => {
-  const {show, data, handleCancel, onUpdate} = props;
+    const {show, data, handleCancel, onUpdate} = props;
   const handleDelete = async () => {
       axios
           .delete(import.meta.env.VITE_URL_WEB_API + '/api/resourceType/deleteResourceType/' + data.id)

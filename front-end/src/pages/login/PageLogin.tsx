@@ -37,8 +37,8 @@ const PageLogin = () => {
             username: formData.emailUsername,
             password: formData.password
         }
-        axios
-            .post(import.meta.env.VITE_URL_WEB_API + '/api/user/verifyUser', toSubmit)
+         await axios
+            .post(import.meta.env.VITE_URL_WEB_API + '/api/user/verifyUser', toSubmit, { withCredentials: true })
             .then((response)=>{
                 if (response.status === 200) {
                     setIsVerified(true)

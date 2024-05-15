@@ -1,5 +1,3 @@
-import {useNavigate} from "react-router-dom";
-import {useGlobalState} from "../global/GlobalStateContext";
 import {useEffect, useState} from "react";
 import {ICustomersSuppliers} from "../interfaces/ICustomersSuppliers";
 import CustomPaper from "../components/CutomPaper";
@@ -9,16 +7,10 @@ import CmpTableCustomersSuppliers from "../components/customersSuppliers/CmpTabl
 import CmpAddEditInfoCustomersSuppliers from "../components/customersSuppliers/CmpAddEditInfoCustomersSuppliers";
 import axios from "axios";
 import {toast} from "react-toastify";
+import useTokenCheck from "../utility/useTokenCheck.ts";
 
 const PageCustomersSuppliers = () => {
-    const navigate = useNavigate();
-    const { isVerified } = useGlobalState();
-
-    useEffect(() => {
-        if (!isVerified) {
-            return navigate("/")
-        }
-    })
+    useTokenCheck();
 
     const [customersSuppliersData, setCustomersSuppliersData] = useState<ICustomersSuppliers[]>([]);
 

@@ -1,24 +1,16 @@
-import {useGlobalState} from "../global/GlobalStateContext";
 import CustomPaper from "../components/CutomPaper";
 import CustomButton from "../components/CustomButton";
 import {MdPersonAdd} from "react-icons/md";
 import {useState, useEffect} from "react";
-import {useNavigate} from "react-router-dom";
 import axios from "axios";
 import {IUsers} from "../interfaces/IUsers";
 import CmpTableUsers from "../components/users/CmpTableUsers";
 import CmpAddEditUser from "../components/users/CmpAddEditUser";
 import {toast} from "react-toastify";
+import useTokenCheck from "../utility/useTokenCheck.ts";
 
 const PageUsers = () => {
-    const navigate = useNavigate();
-    const { isVerified } = useGlobalState();
-
-    useEffect(() => {
-        if (!isVerified) {
-            return navigate("/")
-        }
-    })
+    useTokenCheck();
 
     const [usersData, setUsersData] = useState<IUsers[]>([]);
 

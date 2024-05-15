@@ -1,7 +1,20 @@
 const express = require('express');
 const User = require('../models/userModel');
+const authenticateToken = require("../middleware/authentication");
+const jwt = require("jsonwebtoken");
 
 const router = express.Router();
+
+function generateAccessToken(username) {
+    return jwt.sign({ username: username, type: 'access' }, process.env.TOKEN_SECRET, { expiresIn: '6h' });
+}
+
+router.get('/checkToken', authenticateToken, (req, res) => {
+    res.send({
+        "status": 200,
+        "message": "Verificato!"
+    });
+})
 
 router.get('/getAllUser', async (req, res) => {
     const users = await User.getAllUser();
@@ -42,6 +55,8 @@ router.post('/verifyUser', async (req, res) => {
     const { email, username, password } = req.body;
     const verUser = await User.verifyUser(email, username, password);
     if (verUser.status === 200) {
+        const token = generateAccessToken(verUser.username)
+        res.cookie('token', token, { httpOnly: true });
         res.json(verUser);
     } else {
         res.status(verUser.status).json(verUser.message);
