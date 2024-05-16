@@ -16,12 +16,12 @@ router.get('/checkToken', authenticateToken, (req, res) => {
     });
 })
 
-router.get('/getAllUser', async (req, res) => {
+router.get('/getAllUser', authenticateToken, async (req, res) => {
     const users = await User.getAllUser();
     res.json(users);
 });
 
-router.post('/createUser', async (req, res) => {
+router.post('/createUser', authenticateToken, async (req, res) => {
     const { lastname, firstname, username, email, phone_number, password } = req.body;
     const newUser = await User.createUser(lastname, firstname, username, email, phone_number, password);
     if (newUser.status === 200) {
@@ -31,7 +31,7 @@ router.post('/createUser', async (req, res) => {
     }
 });
 
-router.put('/updateUser/:id', async (req, res) => {
+router.put('/updateUser/:id', authenticateToken, async (req, res) => {
     const { username, lastname, firstname, email, phone_number, password } = req.body;
     const updUser = await User.updateUser(req.params.id, username, lastname, firstname, email, phone_number, password);
     if (updUser.status === 200) {
@@ -41,7 +41,7 @@ router.put('/updateUser/:id', async (req, res) => {
     }
 });
 
-router.put('/changeUserPassword/:id', async (req, res) => {
+router.put('/changeUserPassword/:id', authenticateToken, async (req, res) => {
     const { password } = req.body;
     const chPwdUser = await User.changeUserPassword(req.params.id, password);
     if (chPwdUser.status === 200) {
@@ -63,7 +63,7 @@ router.post('/verifyUser', async (req, res) => {
     }
 });
 
-router.delete('/deleteUser/:id', async (req, res) => {
+router.delete('/deleteUser/:id', authenticateToken, async (req, res) => {
     const delUser = await User.deleteUser(req.params.id);
     if (delUser.status === 200) {
         res.json(delUser);

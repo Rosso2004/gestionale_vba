@@ -20,7 +20,7 @@ const PageCustomersSuppliers = () => {
 
     const fetchCustomersSuppliers = () => {
         axios
-            .get(import.meta.env.VITE_URL_WEB_API + '/api/customerSupplier/getAllCustomerSupplier')
+            .get(import.meta.env.VITE_URL_WEB_API + '/api/customerSupplier/getAllCustomerSupplier', { withCredentials: true })
             .then((response) => {
                 setCustomersSuppliersData(response.data);
             })

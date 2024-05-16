@@ -15,6 +15,8 @@ import {
 import axios from "axios";
 import {IUsers} from "../../interfaces/IUsers";
 import {toast} from "react-toastify";
+import {useNavigate} from "react-router-dom";
+import {useGlobalState} from "../../global/GlobalStateContext.tsx";
 
 interface ICmpAddEditUser {
     show: boolean;
@@ -25,6 +27,8 @@ interface ICmpAddEditUser {
 }
 const CmpAddEditUser : React.FC<ICmpAddEditUser> = (props) => {
     const {show, handleClose, type, data, onUpdate} = props;
+    const navigate = useNavigate();
+    const {setIsVerified} = useGlobalState();
     const [formData, setFormData] = useState<IUsers>({
         id:'',
         lastname: '',
@@ -59,7 +63,7 @@ const CmpAddEditUser : React.FC<ICmpAddEditUser> = (props) => {
 
         if (type === "add") {
             axios
-                .post(import.meta.env.VITE_URL_WEB_API + '/api/user/createUser', formData)
+                .post(import.meta.env.VITE_URL_WEB_API + '/api/user/createUser', formData, { withCredentials: true })
                 .then((response) => {
                     if (response.status === 200) {
                         handleClearAndClose();
@@ -75,11 +79,16 @@ const CmpAddEditUser : React.FC<ICmpAddEditUser> = (props) => {
                         })
                         toast.error(error.response.data)
                     }
+                    if (error.response.status === 403) {
+                        navigate("/");
+                        setIsVerified(false);
+                        toast.error(error.response.data.message);
+                    }
                 });
         } else if (type === "update") {
             if (data?.id) {
                 axios
-                    .put(import.meta.env.VITE_URL_WEB_API + '/api/user/updateUser/' + data.id, formData)
+                    .put(import.meta.env.VITE_URL_WEB_API + '/api/user/updateUser/' + data.id, formData, { withCredentials: true })
                     .then((response) => {
                         if (response.status === 200) {
                             handleClearAndClose();
@@ -101,6 +110,11 @@ const CmpAddEditUser : React.FC<ICmpAddEditUser> = (props) => {
                                 password: error.response.data
                             })
                             toast.error(error.response.data)
+                        }
+                        if (error.response.status === 403) {
+                            navigate("/");
+                            setIsVerified(false);
+                            toast.error(error.response.data.message);
                         }
                     });
             } else {

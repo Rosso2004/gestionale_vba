@@ -1,14 +1,15 @@
 const express = require('express');
 const ResourceType = require('../models/resourceTypeModel');
+const authenticateToken = require("../middleware/authentication");
 
 const router = express.Router();
 
-router.get('/getAllResourceType', async (req, res) => {
+router.get('/getAllResourceType', authenticateToken, async (req, res) => {
     const resourceType = await ResourceType.getAllResourceType();
     res.json(resourceType);
 });
 
-router.post('/createResourceType', async (req, res) => {
+router.post('/createResourceType', authenticateToken, async (req, res) => {
     const { name, description, note } = req.body;
     const newResourceType = await ResourceType.createResourceType(name, description, note);
     if (newResourceType.status === 200) {
@@ -18,7 +19,7 @@ router.post('/createResourceType', async (req, res) => {
     }
 });
 
-router.put('/updateResourceType/:id', async (req, res) => {
+router.put('/updateResourceType/:id', authenticateToken, async (req, res) => {
     const { name, description, note } = req.body;
     const updResourceType = await ResourceType.updateResourceType(req.params.id, name, description, note);
     if (updResourceType.status === 200) {
@@ -28,7 +29,7 @@ router.put('/updateResourceType/:id', async (req, res) => {
     }
 });
 
-router.delete('/deleteResourceType/:id', async (req, res) => {
+router.delete('/deleteResourceType/:id', authenticateToken, async (req, res) => {
     const delResourceType = await ResourceType.deleteResourceType(req.params.id);
     if (delResourceType.status === 200) {
         res.json(delResourceType);

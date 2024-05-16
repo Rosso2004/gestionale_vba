@@ -2,6 +2,8 @@ import CustomAlertDialog from "../CustomAlertDialog";
 import {ICustomersSuppliers} from "../../interfaces/ICustomersSuppliers";
 import axios from "axios";
 import {toast} from "react-toastify";
+import {useNavigate} from "react-router-dom";
+import {useGlobalState} from "../../global/GlobalStateContext.tsx";
 
 type ICmpDeleteResourceType = {
     show: boolean;
@@ -11,9 +13,11 @@ type ICmpDeleteResourceType = {
 }
 const CmpDeleteCustomersSuppliers: React.FC<ICmpDeleteResourceType> = (props) => {
     const {show, data, handleCancel, onUpdate} = props;
+    const navigate = useNavigate();
+    const { setIsVerified } = useGlobalState();
     const handleDelete = async () => {
         axios
-            .delete(import.meta.env.VITE_URL_WEB_API + '/api/customerSupplier/deleteCustomerSupplier/' + data.id)
+            .delete(import.meta.env.VITE_URL_WEB_API + '/api/customerSupplier/deleteCustomerSupplier/' + data.id, { withCredentials: true })
             .then((response) => {
                 if (response.status === 200) {
                     onUpdate();
@@ -28,6 +32,11 @@ const CmpDeleteCustomersSuppliers: React.FC<ICmpDeleteResourceType> = (props) =>
                 if (error.response.status === 409) {
                     handleCancel();
                     toast.error(error.response.data)
+                }
+                if (error.response.status === 403) {
+                    navigate("/");
+                    setIsVerified(false);
+                    toast.error(error.response.data.message);
                 }
             });
     }

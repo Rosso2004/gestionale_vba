@@ -20,7 +20,7 @@ const PageResourcesType = () => {
 
     const fetchResources = () => {
         axios
-            .get(import.meta.env.VITE_URL_WEB_API + '/api/resourceType/getAllResourceType')
+            .get(import.meta.env.VITE_URL_WEB_API + '/api/resourceType/getAllResourceType', { withCredentials: true })
             .then((response) => {
                 setResourcesTypeData(response.data);
             })

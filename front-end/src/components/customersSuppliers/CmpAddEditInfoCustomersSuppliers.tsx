@@ -19,6 +19,8 @@ import axios from "axios";
 import {IResourcesType} from "../../interfaces/IResourcesType";
 import {IResourcesFunction} from "../../interfaces/IResourcesFunction";
 import {toast} from "react-toastify";
+import {useNavigate} from "react-router-dom";
+import {useGlobalState} from "../../global/GlobalStateContext.tsx";
 
 interface ICmpAddEditInfoCustomersSuppliers {
     show: boolean;
@@ -29,6 +31,8 @@ interface ICmpAddEditInfoCustomersSuppliers {
 }
 const CmpAddEditInfoCustomersSuppliers : React.FC<ICmpAddEditInfoCustomersSuppliers> = (props) => {
     const {show, handleClose, type, data, onUpdate} = props;
+    const navigate = useNavigate();
+    const { setIsVerified } = useGlobalState();
     const [formData, setFormData] = useState<ICustomersSuppliers>({
         id: '',
         type: {
@@ -92,7 +96,7 @@ const CmpAddEditInfoCustomersSuppliers : React.FC<ICmpAddEditInfoCustomersSuppli
 
     const getResourcesTypeAndResourcesFunction = () => {
         axios
-            .get(import.meta.env.VITE_URL_WEB_API + '/api/resourceType/getAllResourceType')
+            .get(import.meta.env.VITE_URL_WEB_API + '/api/resourceType/getAllResourceType', { withCredentials: true })
             .then((response) => {
                 const resourcesTypeData = response.data.map((res: IResourcesType) => ({
                     id: res.id,
@@ -109,7 +113,7 @@ const CmpAddEditInfoCustomersSuppliers : React.FC<ICmpAddEditInfoCustomersSuppli
                 toast.error(error);
             });
         axios
-            .get(import.meta.env.VITE_URL_WEB_API + '/api/resourceFunction/getAllResourceFunction')
+            .get(import.meta.env.VITE_URL_WEB_API + '/api/resourceFunction/getAllResourceFunction', { withCredentials: true })
             .then((response) => {
                 const resourcesFunctionData = response.data.map((res: IResourcesFunction) => ({
                     id: res.id,
@@ -156,7 +160,7 @@ const CmpAddEditInfoCustomersSuppliers : React.FC<ICmpAddEditInfoCustomersSuppli
         } else {
             if (type === "add") {
                 axios
-                    .post(import.meta.env.VITE_URL_WEB_API + '/api/customerSupplier/createCustomerSupplier', toSubmit)
+                    .post(import.meta.env.VITE_URL_WEB_API + '/api/customerSupplier/createCustomerSupplier', toSubmit, { withCredentials: true })
                     .then((response)=>{
                         if (response.status === 200) {
                             handleClearAndClose();
@@ -173,11 +177,16 @@ const CmpAddEditInfoCustomersSuppliers : React.FC<ICmpAddEditInfoCustomersSuppli
                             })
                             toast.error(error.response.data);
                         }
+                        if (error.response.status === 403) {
+                            navigate("/");
+                            setIsVerified(false);
+                            toast.error(error.response.data.message);
+                        }
                     });
             } else if (type === "update") {
                 if (data?.id) {
                     axios
-                        .put(import.meta.env.VITE_URL_WEB_API + '/api/customerSupplier/updateCustomerSupplier/' + data.id, toSubmit)
+                        .put(import.meta.env.VITE_URL_WEB_API + '/api/customerSupplier/updateCustomerSupplier/' + data.id, toSubmit, { withCredentials: true })
                         .then((response) => {
                             if (response.status === 200) {
                                 handleClearAndClose();
@@ -193,6 +202,11 @@ const CmpAddEditInfoCustomersSuppliers : React.FC<ICmpAddEditInfoCustomersSuppli
                                     name: error.response.data
                                 })
                                 toast.error(error.response.data);
+                            }
+                            if (error.response.status === 403) {
+                                navigate("/");
+                                setIsVerified(false);
+                                toast.error(error.response.data.message);
                             }
                         });
                 } else {

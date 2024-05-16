@@ -20,7 +20,7 @@ const PageOrdersManagement = () => {
 
     const fetchOrders = () => {
         axios
-            .get(import.meta.env.VITE_URL_WEB_API + '/api/order/getAllOrder')
+            .get(import.meta.env.VITE_URL_WEB_API + '/api/order/getAllOrder', { withCredentials: true })
             .then((response) => {
                 setOrdersData(response.data);
             })

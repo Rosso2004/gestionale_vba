@@ -1,14 +1,15 @@
 const express = require('express');
 const Order = require('../models/orderModel');
+const authenticateToken = require("../middleware/authentication");
 
 const router = express.Router();
 
-router.get('/getAllOrder', async (req, res) => {
+router.get('/getAllOrder', authenticateToken, async (req, res) => {
     const order = await Order.getAllOrder();
     res.json(order);
 });
 
-router.post('/createOrder', async (req, res) => {
+router.post('/createOrder', authenticateToken, async (req, res) => {
     const { manager, customer, name, status, type, start_date, end_date, note } = req.body;
     const newOrder = await Order.createOrder(manager, customer, name, status, type, start_date, end_date, note);
     if (newOrder.status === 200) {
@@ -18,7 +19,7 @@ router.post('/createOrder', async (req, res) => {
     }
 });
 
-router.put('/updateOrder/:id', async (req, res) => {
+router.put('/updateOrder/:id', authenticateToken, async (req, res) => {
     const { manager, customer, name, status, type, start_date, end_date, note } = req.body;
     const updOrder = await Order.updateOrder(req.params.id, manager, customer, name, status, type, start_date, end_date, note);
     if (updOrder.status === 200) {
@@ -28,7 +29,7 @@ router.put('/updateOrder/:id', async (req, res) => {
     }
 });
 
-router.delete('/deleteOrder/:id', async (req, res) => {
+router.delete('/deleteOrder/:id', authenticateToken, async (req, res) => {
     const delOrder = await Order.deleteOrder(req.params.id);
     if (delOrder.status === 200) {
         res.json(delOrder);

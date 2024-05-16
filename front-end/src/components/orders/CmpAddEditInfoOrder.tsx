@@ -12,6 +12,8 @@ import CustomSelect from "../CustomSelect";
 import axios from "axios";
 import {toast} from "react-toastify";
 import {IOrders} from "../../interfaces/IOrders";
+import {useNavigate} from "react-router-dom";
+import {useGlobalState} from "../../global/GlobalStateContext.tsx";
 
 interface ICmpAddEditInfoCustomersSuppliers {
     show: boolean;
@@ -22,6 +24,8 @@ interface ICmpAddEditInfoCustomersSuppliers {
 }
 const CmpAddEditInfoOrder : React.FC<ICmpAddEditInfoCustomersSuppliers> = (props) => {
     const {show, handleClose, type, data, onUpdate} = props;
+    const navigate = useNavigate();
+    const { setIsVerified } = useGlobalState();
     const [formData, setFormData] = useState<IOrders>({
         id: '',
         manager: {
@@ -93,7 +97,7 @@ const CmpAddEditInfoOrder : React.FC<ICmpAddEditInfoCustomersSuppliers> = (props
 
     const getSelectInputData = () => {
         axios
-            .get(import.meta.env.VITE_URL_WEB_API + '/api/user/getAllUser')
+            .get(import.meta.env.VITE_URL_WEB_API + '/api/user/getAllUser', { withCredentials: true })
             .then((response) => {
                 const userData = response.data.map((res: { id: string; lastname: string; firstname: string; }) => ({
                     id: res.id,
@@ -108,7 +112,7 @@ const CmpAddEditInfoOrder : React.FC<ICmpAddEditInfoCustomersSuppliers> = (props
                 toast.error(error);
             });
         axios
-            .get(import.meta.env.VITE_URL_WEB_API + '/api/customerSupplier/getAllCustomerSupplier')
+            .get(import.meta.env.VITE_URL_WEB_API + '/api/customerSupplier/getAllCustomerSupplier', { withCredentials: true })
             .then((response) => {
                 const filteredData = response.data.filter((res: { fnc: {id: number} }) => res.fnc.id === 1 || res.fnc.id === 2);
                 const customerData = filteredData.map((res: { id: string; name: string; }) => ({
@@ -124,7 +128,7 @@ const CmpAddEditInfoOrder : React.FC<ICmpAddEditInfoCustomersSuppliers> = (props
                 toast.error(error);
             });
         axios
-            .get(import.meta.env.VITE_URL_WEB_API + '/api/orderStatus/getAllOrderStatus')
+            .get(import.meta.env.VITE_URL_WEB_API + '/api/orderStatus/getAllOrderStatus', { withCredentials: true })
             .then((response) => {
                 const statusData = response.data.map((res: { id: string; name: string; }) => ({
                     id: res.id,
@@ -139,7 +143,7 @@ const CmpAddEditInfoOrder : React.FC<ICmpAddEditInfoCustomersSuppliers> = (props
                 toast.error(error);
             });
         axios
-            .get(import.meta.env.VITE_URL_WEB_API + '/api/orderTypes/getAllOrderTypes')
+            .get(import.meta.env.VITE_URL_WEB_API + '/api/orderTypes/getAllOrderTypes', { withCredentials: true })
             .then((response) => {
                 const typesData = response.data.map((res: { id: string; name: string; }) => ({
                     id: res.id,
@@ -204,7 +208,7 @@ const CmpAddEditInfoOrder : React.FC<ICmpAddEditInfoCustomersSuppliers> = (props
         } else {
             if (type === "add") {
                 axios
-                    .post(import.meta.env.VITE_URL_WEB_API + '/api/order/createOrder', toSubmit)
+                    .post(import.meta.env.VITE_URL_WEB_API + '/api/order/createOrder', toSubmit, { withCredentials: true })
                     .then((response)=>{
                         if (response.status === 200) {
                             handleClearAndClose();
@@ -223,12 +227,17 @@ const CmpAddEditInfoOrder : React.FC<ICmpAddEditInfoCustomersSuppliers> = (props
                             })
                             toast.error(error.response.data);
                         }
+                        if (error.response.status === 403) {
+                            navigate("/");
+                            setIsVerified(false);
+                            toast.error(error.response.data.message);
+                        }
                     });
             }
             else if (type === "update") {
                 if (data?.id) {
                     axios
-                        .put(import.meta.env.VITE_URL_WEB_API + '/api/order/updateOrder/' + data.id, toSubmit)
+                        .put(import.meta.env.VITE_URL_WEB_API + '/api/order/updateOrder/' + data.id, toSubmit, { withCredentials: true })
                         .then((response) => {
                             if (response.status === 200) {
                                 handleClearAndClose();
@@ -246,6 +255,11 @@ const CmpAddEditInfoOrder : React.FC<ICmpAddEditInfoCustomersSuppliers> = (props
                                     name: error.response.data
                                 })
                                 toast.error(error.response.data);
+                            }
+                            if (error.response.status === 403) {
+                                navigate("/");
+                                setIsVerified(false);
+                                toast.error(error.response.data.message);
                             }
                         });
                 } else {

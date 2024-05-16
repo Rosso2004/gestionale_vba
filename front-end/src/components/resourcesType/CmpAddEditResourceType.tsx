@@ -6,6 +6,8 @@ import {MdAdd, MdCancel, MdModeEdit, MdTextFields} from "react-icons/md";
 import {IResourcesType} from "../../interfaces/IResourcesType";
 import axios from "axios";
 import {toast} from "react-toastify";
+import {useNavigate} from "react-router-dom";
+import {useGlobalState} from "../../global/GlobalStateContext.tsx";
 
 interface ICmpAddResourceType {
     show: boolean;
@@ -16,6 +18,8 @@ interface ICmpAddResourceType {
 }
 const CmpAddEditResourceType : React.FC<ICmpAddResourceType> = (props) => {
     const {show, handleClose, type, data, onUpdate} = props;
+    const navigate = useNavigate();
+    const { setIsVerified } = useGlobalState();
     const [formData, setFormData] = useState<IResourcesType>({
         id:'',
         name: '',
@@ -41,7 +45,7 @@ const CmpAddEditResourceType : React.FC<ICmpAddResourceType> = (props) => {
 
         if (type === "add") {
             axios
-                .post(import.meta.env.VITE_URL_WEB_API + '/api/resourceType/createResourceType', formData)
+                .post(import.meta.env.VITE_URL_WEB_API + '/api/resourceType/createResourceType', formData, { withCredentials: true })
                 .then((response) => {
                     if (response.status === 200) {
                         handleClearAndClose();
@@ -54,11 +58,16 @@ const CmpAddEditResourceType : React.FC<ICmpAddResourceType> = (props) => {
                         setNameError(error.response.data)
                         toast.error(error.response.data)
                     }
+                    if (error.response.status === 403) {
+                        navigate("/");
+                        setIsVerified(false);
+                        toast.error(error.response.data.message);
+                    }
                 });
         } else if (type === "update") {
             if (data?.id) {
                 axios
-                    .put(import.meta.env.VITE_URL_WEB_API + '/api/resourceType/updateResourceType/' + data.id, formData)
+                    .put(import.meta.env.VITE_URL_WEB_API + '/api/resourceType/updateResourceType/' + data.id, formData, { withCredentials: true })
                     .then((response) => {
                         if (response.status === 200) {
                             handleClearAndClose();
@@ -70,6 +79,11 @@ const CmpAddEditResourceType : React.FC<ICmpAddResourceType> = (props) => {
                         if (error.response.status === 409) {
                             setNameError(error.response.data)
                             toast.error(error.response.data)
+                        }
+                        if (error.response.status === 403) {
+                            navigate("/");
+                            setIsVerified(false);
+                            toast.error(error.response.data.message);
                         }
                     });
             } else {

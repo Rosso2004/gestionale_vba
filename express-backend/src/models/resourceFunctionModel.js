@@ -30,7 +30,7 @@ class ResourceFunction {
         const [checkPresence] = await db.query('SELECT id FROM customers_suppliers WHERE fnc = ?', [id]);
 
         if (checkPresence.length > 0) {
-            return { status: 409, message: 'Impossibile eliminare la funzione risorsa poichè è utilizzata in una risorsa' };
+            return { status: 409, message: 'Impossibile eliminare la funzione risorsa poichè è utilizzata in una commmessa' };
         } else if (checkPresence.length === 0) {
             const [checkResults] = await db.query('SELECT id FROM resources_function WHERE id = ?', [id]);
             if (checkResults.length === 0) {

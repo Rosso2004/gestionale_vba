@@ -30,7 +30,7 @@ class ResourceType {
         const [checkPresence] = await db.query('SELECT id FROM customers_suppliers WHERE type = ?', [id]);
 
         if (checkPresence.length > 0) {
-            return { status: 409, message: 'Impossibile eliminare questo tipo risorsa poichè è utilizzata in una risorsa' };
+            return { status: 409, message: 'Impossibile eliminare questo tipo risorsa poichè è utilizzata in una commessa' };
         } else if (checkPresence.length === 0) {
             const [checkResults] = await db.query('SELECT id FROM resources_type WHERE id = ?', [id]);
             if (checkResults.length === 0) {

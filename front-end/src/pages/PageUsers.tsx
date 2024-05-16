@@ -20,7 +20,7 @@ const PageUsers = () => {
 
     const fetchUsers = () => {
         axios
-            .get(import.meta.env.VITE_URL_WEB_API + '/api/user/getAllUser')
+            .get(import.meta.env.VITE_URL_WEB_API + '/api/user/getAllUser', { withCredentials: true })
             .then((response) => {
                 setUsersData(response.data);
             })

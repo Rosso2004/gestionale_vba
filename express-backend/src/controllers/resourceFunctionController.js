@@ -1,14 +1,15 @@
 const express = require('express');
 const ResourceFunction = require('../models/resourceFunctionModel');
+const authenticateToken = require("../middleware/authentication");
 
 const router = express.Router();
 
-router.get('/getAllResourceFunction', async (req, res) => {
+router.get('/getAllResourceFunction', authenticateToken, async (req, res) => {
     const resourceFunction = await ResourceFunction.getAllResourceFunction();
     res.json(resourceFunction);
 });
 
-router.post('/createResourceFunction', async (req, res) => {
+router.post('/createResourceFunction', authenticateToken, async (req, res) => {
     const { name } = req.body;
     const newResourceFunction = await ResourceFunction.createResourceFunction(name);
     if (newResourceFunction.status === 200) {
@@ -18,7 +19,7 @@ router.post('/createResourceFunction', async (req, res) => {
     }
 });
 
-router.put('/updateResourceFunction/:id', async (req, res) => {
+router.put('/updateResourceFunction/:id', authenticateToken, async (req, res) => {
     const { name } = req.body;
     const updResourceFunction = await ResourceFunction.updateResourceFunction(req.params.id, name);
     if (updResourceFunction.status === 200) {
@@ -28,7 +29,7 @@ router.put('/updateResourceFunction/:id', async (req, res) => {
     }
 });
 
-router.delete('/deleteResourceFunction/:id', async (req, res) => {
+router.delete('/deleteResourceFunction/:id', authenticateToken, async (req, res) => {
     const delResourceFunction = await ResourceFunction.deleteResourceFunction(req.params.id);
     if (delResourceFunction.status === 200) {
         res.json(delResourceFunction);
