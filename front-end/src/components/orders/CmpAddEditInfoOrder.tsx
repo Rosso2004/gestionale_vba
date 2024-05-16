@@ -302,7 +302,6 @@ const CmpAddEditInfoOrder : React.FC<ICmpAddEditInfoCustomersSuppliers> = (props
             note: ''
         });
     }
-    console.log(formData.status.id)
     return (
         <CustomModal title={type === "add" ? "Inserimento Commessa" : type === "update" ? "Modifica Commessa" : "Informazioni Commessa"} show={show} handleClose={handleClearAndClose}>
             <form onSubmit={handleSubmit}>
