@@ -70,12 +70,10 @@ class User {
     }
 
     static async deleteUser(id) {
-        const [checkResults] = await db.query('SELECT id FROM users WHERE id = ?', [id]);
+        const [checkResults] = await db.query('SELECT id FROM orders WHERE manager = ?', [id]);
         if (checkResults.length > 0) {
-            return { status: 409, message: 'Impossibile eliminare questo utente poichè è utilizzato in una commessa' };
-        } else if (checkResults.length === 0) {
-            return { status: 404, message: 'Utente non trovato' };
-        } else if (checkResults.length === 1) {
+            return { status: 409, message: 'Impossibile eliminare questo utente poichè è il responsabile in una commessa' };
+        } else {
             await db.query('DELETE FROM users WHERE id = ?', [id]);
             return { status: 200, message: 'Utente rimosso con successo' };
         }

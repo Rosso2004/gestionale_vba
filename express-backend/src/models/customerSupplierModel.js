@@ -63,14 +63,12 @@ class CustomerSupplier {
     }
 
     static async deleteCustomerSupplier(id) {
-        const [checkResults] = await db.query('SELECT id FROM customers_suppliers WHERE id = ?', [id]);
+        const [checkResults] = await db.query('SELECT id FROM orders WHERE customer = ?', [id]);
         if (checkResults.length > 0) {
             return { status: 409, message: 'Impossibile eliminare questo cliente / fornitore poichè è utilizzato in una commessa' };
-        } else if (checkResults.length === 0) {
-            return { status: 404, message: 'Risorsa non trovata' };
-        } else if (checkResults.length === 1) {
+        } else {
             await db.query('DELETE FROM customers_suppliers WHERE id = ?', [id]);
-            return { status: 200, message: 'Risorsa rimossa con successo' };
+            return { status: 200, message: 'Cliente / Fornitore rimosso con successo' };
         }
     }
 }
