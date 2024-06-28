@@ -11,7 +11,7 @@ const CmpHeader: React.FC<ICmpHeader> = (props) => {
             <div className="px-3 py-3 lg:px-5 lg:pl-3">
                 <div className="flex items-center justify-between">
                     <div className="flex items-center justify-start">
-                            <img src="https://imgur.com/O5eOwcU.png" className="h-8 mr-3"
+                            <img src="/vba.svg" className="h-8 mr-3"
                                  alt="FlowBite Logo"/>
                             <span
                                 className="self-center text-xl font-semibold sm:text-2xl whitespace-nowrap dark:text-white">VBA</span>
