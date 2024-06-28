@@ -1,7 +1,4 @@
-version: '3.9'
-
 services:
-
   app_vba:
     container_name: fe-vba
     restart: unless-stopped
@@ -16,7 +13,7 @@ services:
       - ./config.js:/usr/share/nginx/html/config.js
 
   db_vba:
-    image: amd64/mysql
+    image: mysql
     restart: always
     networks:
       - default
@@ -38,7 +35,6 @@ services:
     volumes:
       - my-db-vba:/var/lib/mysql
 
-
   api_vba:
     container_name: be-vba
     image: vbagestbe
@@ -53,7 +49,8 @@ services:
       DB_PASSWORD: 'MyMysqlP455w0rd!'
       DB_NAME: 'gestionale_vba'
       PORT: '5000'
-      SECRET_KEY: 'chiavesegreta'
+      TOKEN_SECRET: 'ddac02009daea8818b672a059e91b43f410419f1b3a22ddba4b611a70ee3972193026f5b2b9f591fdb659b1121370bce9c6eb2e9d3e982823a11ba64a3be60a4'
+      DOMAIN: https://esame.redshome.it
 # Names our volume
 volumes:
   my-db-vba:
